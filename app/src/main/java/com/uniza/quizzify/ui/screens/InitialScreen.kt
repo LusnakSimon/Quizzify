@@ -30,7 +30,7 @@ import com.uniza.quizzify.R
 fun InitialScreen(navController: NavController) {
 
     val logoPadding = 8.dp
-    val buttonSpacing = 40.dp
+    val buttonSpacing = 30.dp
 
     val scrollState = rememberScrollState()
 

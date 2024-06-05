@@ -36,14 +36,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
+import com.uniza.quizzify.data.User
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController) {
     val logoPadding = 8.dp
     val buttonSpacing = 20.dp
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
     Column(
@@ -89,6 +91,21 @@ fun SignInScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth(0.75f)
         )
 
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm password") },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(0.75f)
+        )
+
         Spacer(modifier = Modifier.height(buttonSpacing))
 
         Button(
@@ -97,7 +114,7 @@ fun SignInScreen(navController: NavController) {
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {
-            Text(text = "Sign In", fontSize = 18.sp)
+            Text(text = "Register", fontSize = 18.sp)
         }
     }
 }
