@@ -96,6 +96,7 @@ fun SettingsScreen(navController: NavController) {
         ) {
             Text(text = "Save", fontSize = 18.sp)
         }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 
 }
