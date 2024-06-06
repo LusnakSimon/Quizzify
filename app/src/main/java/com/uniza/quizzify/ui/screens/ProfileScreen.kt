@@ -2,6 +2,7 @@ package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -46,10 +49,11 @@ fun ProfileScreen(navController: NavController) {
     ) {
         Row(
             modifier = Modifier
+                .border(1.dp, Color.Black, RectangleShape)
                 .height(75.dp)
                 .fillMaxSize()
                 .background(DarkBlue),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
@@ -57,18 +61,13 @@ fun ProfileScreen(navController: NavController) {
                 Icon(modifier = Modifier.size(50.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = colorResource(id = R.color.white)
-                )
+                    tint = colorResource(id = R.color.white))
             }
-            Text(text = "Profile", fontSize = 35.sp, color = Color.White)
+            Box(modifier = Modifier.fillMaxWidth(0.9f),
+                contentAlignment = Alignment.Center) {
+                Text(text = "Profile", fontSize = 35.sp, color = Color.White)
+            }
 
-            IconButton(onClick = { navController.navigate("settings") }) {
-                Icon(modifier = Modifier.size(50.dp),
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
         }
         Spacer(modifier = Modifier.height(20.dp))
         Image(
@@ -82,22 +81,12 @@ fun ProfileScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth(0.75f)
-                .height(60.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
-                contentColor = Color.White)
-        ) {
-            Text(text = "Change profile picture", fontSize = 18.sp)
-        }
-
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = { navController.navigate("changeUsername") },
             modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
                 .fillMaxWidth(0.75f)
                 .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
@@ -111,6 +100,7 @@ fun ProfileScreen(navController: NavController) {
         Button(
             onClick = { navController.navigate("changePassword") },
             modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
                 .fillMaxWidth(0.75f)
                 .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),

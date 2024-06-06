@@ -1,7 +1,9 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -58,10 +62,11 @@ fun ChangePasswordScreen(navController: NavController) {
     ) {
         Row(
             modifier = Modifier
+                .border(1.dp, Color.Black, RectangleShape)
                 .height(75.dp)
                 .fillMaxSize()
                 .background(DarkBlue),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
@@ -69,18 +74,13 @@ fun ChangePasswordScreen(navController: NavController) {
                 Icon(modifier = Modifier.size(50.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = colorResource(id = R.color.white)
-                )
+                    tint = colorResource(id = R.color.white))
             }
-            Text(text = "Change password", fontSize = 30.sp, color = Color.White)
+            Box(modifier = Modifier.fillMaxWidth(0.9f),
+                contentAlignment = Alignment.Center) {
+                Text(text = "Change password", fontSize = 30.sp, color = Color.White)
+            }
 
-            IconButton(onClick = { navController.navigate("settings") }) {
-                Icon(modifier = Modifier.size(50.dp),
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
         }
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(
@@ -129,12 +129,13 @@ fun ChangePasswordScreen(navController: NavController) {
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
                 .fillMaxWidth(0.75f)
                 .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {
-            Text(text = "Change password", fontSize = 18.sp)
+            Text(text = "Confirm", fontSize = 18.sp)
         }
         Spacer(modifier = Modifier.height(20.dp))
     }

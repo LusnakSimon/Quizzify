@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -53,7 +55,10 @@ fun InitialScreen(navController: NavController) {
 
         Button(
             onClick = { navController.navigate("signIn") },
-            modifier = Modifier.fillMaxWidth(0.8f).height(60.dp),
+            modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
+                .fillMaxWidth(0.8f)
+                .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {
@@ -64,7 +69,10 @@ fun InitialScreen(navController: NavController) {
 
         Button(
             onClick = { navController.navigate("register") },
-            modifier = Modifier.fillMaxWidth(0.8f).height(60.dp),
+            modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
+                .fillMaxWidth(0.8f)
+                .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {

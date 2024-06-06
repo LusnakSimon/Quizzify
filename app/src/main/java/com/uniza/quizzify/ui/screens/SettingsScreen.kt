@@ -1,7 +1,9 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -29,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,7 +45,6 @@ import com.uniza.quizzify.ui.theme.DarkBlue
 fun SettingsScreen(navController: NavController) {
     var darkThemeEnabled by remember { mutableStateOf(false) }
     var notificationsEnabled by remember { mutableStateOf(false) }
-    var soundEnabled by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -51,23 +54,25 @@ fun SettingsScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
-            modifier = Modifier.height(75.dp).fillMaxSize().background(DarkBlue),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .border(1.dp, Color.Black, RectangleShape)
+                .height(75.dp)
+                .fillMaxSize()
+                .background(DarkBlue),
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { navController.navigate("mainMenu") }) {
                 Icon(modifier = Modifier.size(50.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
                     tint = colorResource(id = R.color.white))
             }
-            Text(text = "Settings", fontSize = 35.sp, color = Color.White)
-
-            Icon(modifier = Modifier.size(50.dp),
-                 imageVector = Icons.Default.Settings,
-                 contentDescription = "Settings",
-                 tint = colorResource(id = R.color.white))
+            Box(modifier = Modifier.fillMaxWidth(0.9f),
+                contentAlignment = Alignment.Center) {
+                Text(text = "Settings", fontSize = 35.sp, color = Color.White)
+            }
 
         }
         SettingRow(
@@ -80,15 +85,11 @@ fun SettingsScreen(navController: NavController) {
             isChecked = notificationsEnabled,
             onCheckedChange = { notificationsEnabled = it }
         )
-        SettingRow(
-            settingName = "Sound",
-            isChecked = soundEnabled,
-            onCheckedChange = { soundEnabled = it }
-        )
         Spacer(modifier = Modifier.weight(0.8f))
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
                 .fillMaxWidth(0.8f)
                 .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
@@ -110,7 +111,7 @@ fun SettingRow(settingName: String, isChecked: Boolean, onCheckedChange: (Boolea
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = settingName)
+        Text(text = settingName, fontSize = 25.sp)
 
         Switch(
             checked = isChecked,

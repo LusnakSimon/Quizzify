@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -30,7 +32,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -44,19 +48,22 @@ import com.uniza.quizzify.ui.theme.DarkBlue
 fun LeaderboardScreen(navController: NavController) {
 
     val userNames = List(100) { "User $it" }
-    val configuration = LocalConfiguration.current
-    val isLandscape = remember { configuration.orientation == 2 }
+    val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Row(
             modifier = Modifier
+                .border(1.dp, Color.Black, RectangleShape)
                 .height(75.dp)
                 .fillMaxSize()
                 .background(DarkBlue),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
@@ -64,39 +71,43 @@ fun LeaderboardScreen(navController: NavController) {
                 Icon(modifier = Modifier.size(50.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = colorResource(id = R.color.white)
-                )
+                    tint = colorResource(id = R.color.white))
             }
-            Text(text = "Leaderboard", fontSize = 30.sp, color = Color.White)
+            Box(modifier = Modifier.fillMaxWidth(0.9f),
+                contentAlignment = Alignment.Center) {
+                Text(text = "Leaderboard", fontSize = 35.sp, color = Color.White)
+            }
 
-            IconButton(onClick = { navController.navigate("settings") }) {
-                Icon(modifier = Modifier.size(50.dp),
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "Top 100", fontSize = 30.sp, modifier = Modifier.background(Color.LightGray))
+        Text(text = "Top 100", fontSize = 30.sp, modifier = Modifier
+            .border(1.dp,Color.Black, RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(5.dp))
+            .background(DarkBlue),
+            color = Color.White)
         Row(
             modifier = Modifier
-                .background(Color(0xFF878787))
+                .border(1.dp,Color.Black, RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(10.dp))
+                .background(DarkBlue)
                 .fillMaxWidth(0.8f)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Rank")
-            Text(text = "Username")
-            Text(text = "Rating")
+            Text(text = "Rank", color = Color.White)
+            Text(text = "Username", color = Color.White)
+            Text(text = "Rating", color = Color.White)
         }
         LazyColumn(
             modifier = Modifier
-                .background(Color.LightGray)
+                .border(1.dp,Color.Black, RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color(0xFFBBCBBB))
                 .fillMaxWidth(0.8f)
-                .height(if (isLandscape) 100.dp else 500.dp)
-                .padding(10.dp)
+                .height(500.dp)
+                .padding(1.dp)
+
         ) {
             items(userNames) { user ->
                 LeaderboardRow(userName = user)
@@ -104,6 +115,8 @@ fun LeaderboardScreen(navController: NavController) {
         }
         Row(
             modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(10.dp))
                 .background(Color(0xFF538748))
                 .fillMaxWidth(0.8f)
                 .padding(16.dp),
@@ -124,8 +137,11 @@ fun LeaderboardScreen(navController: NavController) {
 fun LeaderboardRow(userName: String) {
     Row(
         modifier = Modifier
+            .border(1.dp,Color.Black, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
             .fillMaxWidth()
-            .padding(16.dp),
+            .background(Color.LightGray)
+            .padding(20.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

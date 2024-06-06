@@ -2,6 +2,7 @@ package com.uniza.quizzify.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -65,7 +66,10 @@ fun MainMenuScreen(navController: NavController) {
 
         Button(
             onClick = { navController.navigate("categories") },
-            modifier = Modifier.fillMaxWidth(0.75f).height(60.dp),
+            modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
+                .fillMaxWidth(0.75f)
+                .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {
@@ -76,11 +80,14 @@ fun MainMenuScreen(navController: NavController) {
 
         Button(
             onClick = { navController.navigate("leaderboards") },
-            modifier = Modifier.fillMaxWidth(0.75f).height(60.dp),
+            modifier = Modifier
+                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
+                .fillMaxWidth(0.75f)
+                .height(60.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
                 contentColor = Color.White)
         ) {
-            Text(text = "Leaderboards", fontSize = 18.sp)
+            Text(text = "Leaderboard", fontSize = 18.sp)
         }
         Spacer(modifier = Modifier.height(buttonSpacing))
         Row(
@@ -90,6 +97,7 @@ fun MainMenuScreen(navController: NavController) {
         ) {
             Box(
                 modifier = Modifier
+                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
@@ -106,6 +114,7 @@ fun MainMenuScreen(navController: NavController) {
 
             Box(
                 modifier = Modifier
+                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
@@ -122,6 +131,7 @@ fun MainMenuScreen(navController: NavController) {
 
             Box(
                 modifier = Modifier
+                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
@@ -137,6 +147,6 @@ fun MainMenuScreen(navController: NavController) {
             }
         }
         Spacer(modifier = Modifier.height(buttonSpacing))
-        Text(text = "Signed in as ", fontSize = 18.sp, color = Color.Gray)
+        Text(text = "Signed in as username ", fontSize = 18.sp, color = Color.Gray)
     }
 }
