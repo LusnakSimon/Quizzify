@@ -15,12 +15,11 @@ fun NavGraph(startDestination: String = "initial") {
         composable("register") { RegisterScreen(navController) }
         composable("mainMenu") { MainMenuScreen(navController) }
         composable("settings") { SettingsScreen(navController) }
-        composable("leaderboards") { LeaderboardScreen(navController) }
+        composable("leaderboard") { LeaderboardScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("changeUsername") { ChangeUsernameScreen(navController) }
         composable("changePassword") { ChangePasswordScreen(navController) }
         composable("categories") { CategoryScreen(navController) }
         composable("question") { QuestionScreen(navController)}
-
     }
 }

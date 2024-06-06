@@ -1,6 +1,6 @@
 package com.uniza.quizzify.ui.screens
 
-import androidx.compose.foundation.Image
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,37 +15,57 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
+import com.uniza.quizzify.ui.utils.AppLogo
+import com.uniza.quizzify.ui.utils.BlueButton
+import com.uniza.quizzify.ui.utils.SignOutDialog
 
 @Composable
 fun MainMenuScreen(navController: NavController) {
+
     val logoPadding = 8.dp
     val buttonSpacing = 30.dp
 
     val scrollState = rememberScrollState()
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        SignOutDialog(
+            onDismiss = { showDialog = false },
+            onConfirm = {/*TODO*/
+                showDialog = false
+                navController.navigate("initial")
+            }
+        )
+    }
+
+    BackHandler {
+        showDialog = true
+    }
 
     Column(
         modifier = Modifier
@@ -55,41 +75,19 @@ fun MainMenuScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.app_logo_text),
-            contentDescription = "App Logo",
-            modifier = Modifier
-                .size(400.dp)
-        )
+
+        AppLogo(modifier = Modifier.size(400.dp))
 
         Spacer(modifier = Modifier.height(buttonSpacing))
 
-        Button(
-            onClick = { navController.navigate("categories") },
-            modifier = Modifier
-                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
-                .fillMaxWidth(0.75f)
-                .height(60.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
-                contentColor = Color.White)
-        ) {
-            Text(text = "Play", fontSize = 18.sp)
-        }
+        BlueButton(text = "Play", width = 0.75f, onClick = {navController.navigate("categories")})
 
         Spacer(modifier = Modifier.height(buttonSpacing))
 
-        Button(
-            onClick = { navController.navigate("leaderboards") },
-            modifier = Modifier
-                .border(1.dp,Color.Black, RoundedCornerShape(30.dp))
-                .fillMaxWidth(0.75f)
-                .height(60.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
-                contentColor = Color.White)
-        ) {
-            Text(text = "Leaderboard", fontSize = 18.sp)
-        }
+        BlueButton(text = "Leaderboard", width = 0.75f, onClick = {navController.navigate("leaderboard")})
+
         Spacer(modifier = Modifier.height(buttonSpacing))
+
         Row(
             modifier = Modifier.fillMaxWidth(0.75f),
             verticalAlignment = Alignment.Top,
@@ -97,11 +95,11 @@ fun MainMenuScreen(navController: NavController) {
         ) {
             Box(
                 modifier = Modifier
-                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
+                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
-                    .clickable { navController.navigate("initial")},
+                    .clickable { showDialog = true },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -114,7 +112,7 @@ fun MainMenuScreen(navController: NavController) {
 
             Box(
                 modifier = Modifier
-                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
+                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
@@ -131,7 +129,7 @@ fun MainMenuScreen(navController: NavController) {
 
             Box(
                 modifier = Modifier
-                    .border(1.dp,Color.Black, RoundedCornerShape(12.dp))
+                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorResource(id = R.color.dark_blue))
@@ -147,6 +145,8 @@ fun MainMenuScreen(navController: NavController) {
             }
         }
         Spacer(modifier = Modifier.height(buttonSpacing))
-        Text(text = "Signed in as username ", fontSize = 18.sp, color = Color.Gray)
+        Text(text = /*TODO*/"Signed in as username ", fontSize = 18.sp, color = Color.Gray)
     }
 }
+
+

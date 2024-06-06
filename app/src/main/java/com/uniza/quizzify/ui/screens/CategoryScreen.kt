@@ -1,17 +1,14 @@
 package com.uniza.quizzify.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,35 +21,47 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
-import com.uniza.quizzify.ui.theme.DarkBlue
+import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.ResetDialog
 
 @Composable
 fun CategoryScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        ResetDialog(
+            onDismiss = { showDialog = false },
+            onConfirm = {
+                showDialog = false
+                /*TODO reset progress*/
+            }
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,42 +69,25 @@ fun CategoryScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Row(
-            modifier = Modifier
-                .border(1.dp, Color.Black, RectangleShape)
-                .height(75.dp)
-                .fillMaxSize()
-                .background(DarkBlue),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
 
-            ) {
-            IconButton(onClick = { navController.navigate("mainMenu") }) {
-                Icon(modifier = Modifier.size(50.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = colorResource(id = R.color.white))
-            }
-            Box(modifier = Modifier.fillMaxWidth(0.9f),
-                contentAlignment = Alignment.Center) {
-                Text(text = "Categories", fontSize = 35.sp, color = Color.White)
-            }
+        CustomTopBar(navController = navController, navigateTo = "mainMenu", title = "Categories")
 
-        }
-        val sampleItems = List(10) {
+        val sampleItems = List(10) {/*TODO remove later*/
             CardItem(
                 title = "Category $it",
                 description = "$it/10",
                 imageResId = android.R.drawable.ic_menu_camera
             )
         }
-        ScrollableCardColumn(items = sampleItems, onItemClick = {navController.navigate("question")})
+        ScrollableCategoryColumn(items = sampleItems,
+            onItemClick = {/*TODO*/navController.navigate("question")
+        }, {showDialog = true})
 
     }
 }
 
 @Composable
-fun ScrollableCardColumn(items: List<CardItem>, onItemClick: (CardItem) -> Unit) {
+fun ScrollableCategoryColumn(/*TODO*/items: List<CardItem>, onItemClick: (CardItem) -> Unit, onResetClick: () -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,14 +96,14 @@ fun ScrollableCardColumn(items: List<CardItem>, onItemClick: (CardItem) -> Unit)
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(items) { item ->
-            CardItemComposable(item = item, onClick = { onItemClick(item) })
+            CategoryCard(item = item, onClick = { onItemClick(item) }, onResetClick)
         }
 
     }
 }
 
 @Composable
-fun CardItemComposable(item: CardItem, onClick: () -> Unit) {
+fun CategoryCard(/*TODO*/item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) {
     Card(
         modifier = Modifier
             .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
@@ -145,7 +137,7 @@ fun CardItemComposable(item: CardItem, onClick: () -> Unit) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(text = item.description, fontSize = 20.sp, color = Color.Black)
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { Log.d("reset button", "reset button clicked") }) {
+                IconButton(onClick = { onResetClick() }) {
                     Icon(
                         modifier = Modifier.size(50.dp),
                         imageVector = Icons.Default.Refresh,
@@ -159,7 +151,9 @@ fun CardItemComposable(item: CardItem, onClick: () -> Unit) {
     }
 }
 
-data class CardItem(
+
+
+data class CardItem(/*TODO remove later*/
     val title: String,
     val description: String,
     val imageResId: Int
