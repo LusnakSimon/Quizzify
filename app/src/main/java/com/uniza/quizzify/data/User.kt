@@ -10,7 +10,5 @@ data class User(
     val password: String,
     val rating: Int = 0,
     val darkMode: Boolean = false,
-    val notifications: Boolean = false,
-    val sound: Boolean = false,
-    val profilePicture: String? = null
+    val notifications: Boolean = false
 )

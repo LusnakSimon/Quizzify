@@ -13,4 +13,5 @@ interface CategoryDao {
 
     @Query("SELECT * FROM categories")
     fun getAllCategories(): LiveData<List<Category>>
+
 }

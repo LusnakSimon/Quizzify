@@ -13,10 +13,8 @@ class UserRepository(private val userDao: UserDao) {
 
     suspend fun updatePassword(userId: Int, newPassword: String) = userDao.updatePassword(userId, newPassword)
 
-    suspend fun updateProfilePicture(userId: Int, profilePicture: String) = userDao.updateProfilePicture(userId, profilePicture)
-
-    suspend fun updateUserSettings(userId: Int, darkMode: Boolean, notifications: Boolean, sound: Boolean) {
-        userDao.updateUserSettings(userId, darkMode, notifications, sound)
+    suspend fun updateUserSettings(userId: Int, darkMode: Boolean, notifications: Boolean) {
+        userDao.updateUserSettings(userId, darkMode, notifications)
     }
 
     suspend fun updateRating(userId: Int, increment: Int) = userDao.updateRating(userId, increment)
