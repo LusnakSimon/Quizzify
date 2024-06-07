@@ -1,5 +1,6 @@
 package com.uniza.quizzify.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,36 +15,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.uniza.quizzify.ui.theme.QuizzifyTheme
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
 fun InitialScreen(navController: NavController) {
 
-    val logoPadding = 8.dp
-    val buttonSpacing = 30.dp
+    BackHandler {}
+    QuizzifyTheme {
 
-    val scrollState = rememberScrollState()
+    }
+    ScrollableColumn {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(logoPadding)
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+        Spacer(modifier = Modifier.height(30.dp))
 
         AppLogo(modifier = Modifier.size(400.dp))
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(50.dp))
 
-        BlueButton(text = "Sign In", width = 0.8f, onClick = {navController.navigate("signIn")})
+        BlueButton(text = "Sign In", onClick = {navController.navigate("signIn")})
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        BlueButton(text = "Register", width = 0.8f, onClick = {navController.navigate("register")})
+        BlueButton(text = "Register", onClick = {navController.navigate("register")})
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }

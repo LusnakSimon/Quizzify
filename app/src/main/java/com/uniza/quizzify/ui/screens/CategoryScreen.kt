@@ -45,11 +45,10 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.ResetDialog
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
 fun CategoryScreen(navController: NavController) {
-
-    val scrollState = rememberScrollState()
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -62,13 +61,8 @@ fun CategoryScreen(navController: NavController) {
             }
         )
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
+
+    ScrollableColumn {
 
         CustomTopBar(navController = navController, navigateTo = "mainMenu", title = "Categories")
 
@@ -81,8 +75,7 @@ fun CategoryScreen(navController: NavController) {
         }
         ScrollableCategoryColumn(items = sampleItems,
             onItemClick = {/*TODO*/navController.navigate("question")
-        }, {showDialog = true})
-
+            }, {showDialog = true})
     }
 }
 

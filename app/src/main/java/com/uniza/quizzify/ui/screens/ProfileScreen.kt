@@ -19,18 +19,12 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.utils.BlueButton
 import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
 
+    ScrollableColumn {
         CustomTopBar(navController = navController, navigateTo = "mainMenu", title = "Profile")
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -39,7 +33,7 @@ fun ProfileScreen(navController: NavController) {
             painter = painterResource(id = R.drawable.app_logo_text),
             contentDescription = "App Logo",
             modifier = Modifier.fillMaxSize(0.75f)
-            )
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -49,11 +43,11 @@ fun ProfileScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        BlueButton(text = "Change username", width = 0.75f, onClick = {navController.navigate("changeUsername")})
+        BlueButton(text = "Change username", onClick = {navController.navigate("changeUsername")})
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        BlueButton(text = "Change password", width = 0.75f, onClick = {navController.navigate("changePassword")})
+        BlueButton(text = "Change password", onClick = {navController.navigate("changePassword")})
 
         Spacer(modifier = Modifier.height(20.dp))
     }

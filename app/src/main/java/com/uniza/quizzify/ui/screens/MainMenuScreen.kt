@@ -41,22 +41,20 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
+import com.uniza.quizzify.ui.utils.BlueIconButton
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.ui.utils.SignOutDialog
 
 @Composable
 fun MainMenuScreen(navController: NavController) {
-
-    val logoPadding = 8.dp
-    val buttonSpacing = 30.dp
-
-    val scrollState = rememberScrollState()
 
     var showDialog by remember { mutableStateOf(false) }
 
     if (showDialog) {
         SignOutDialog(
             onDismiss = { showDialog = false },
-            onConfirm = {/*TODO*/
+            onConfirm = {
+                /*TODO sign out*/
                 showDialog = false
                 navController.navigate("initial")
             }
@@ -67,85 +65,41 @@ fun MainMenuScreen(navController: NavController) {
         showDialog = true
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(logoPadding)
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+    ScrollableColumn {
+
+        Spacer(modifier = Modifier.height(20.dp))
 
         AppLogo(modifier = Modifier.size(400.dp))
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        BlueButton(text = "Play", width = 0.75f, onClick = {navController.navigate("categories")})
+        BlueButton(text = "Play", onClick = {navController.navigate("categories")})
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        BlueButton(text = "Leaderboard", width = 0.75f, onClick = {navController.navigate("leaderboard")})
+        BlueButton(text = "Leaderboard", onClick = {navController.navigate("leaderboard")})
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(0.75f),
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(
-                modifier = Modifier
-                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(colorResource(id = R.color.dark_blue))
-                    .clickable { showDialog = true },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(50.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                    contentDescription = "Sign out",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(colorResource(id = R.color.dark_blue))
-                    .clickable { navController.navigate("profile") },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(50.dp),
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Profile",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(colorResource(id = R.color.dark_blue))
-                    .clickable { navController.navigate("settings") },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(50.dp),
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
+            val so = Icons.AutoMirrored.Filled.ExitToApp/*TODO*/
+            BlueIconButton(width = 80.dp, height = 80.dp, description = "Sign out", icon = so, onClick = {showDialog = true})
+            val po = Icons.Default.Person/*TODO*/
+            BlueIconButton(width = 80.dp, height = 80.dp, description = "Profile", icon = po, onClick = {navController.navigate("profile")})
+            val st = Icons.Default.Settings/*TODO*/
+            BlueIconButton(width = 80.dp, height = 80.dp, description = "Settings", icon = st, onClick = {navController.navigate("settings")})
         }
-        Spacer(modifier = Modifier.height(buttonSpacing))
-        Text(text = /*TODO*/"Signed in as username ", fontSize = 18.sp, color = Color.Gray)
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(text = /*TODO*/"Signed in as username ", fontSize = 18.sp, color = Color.Gray/*TODO*/)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
     }
 }
 

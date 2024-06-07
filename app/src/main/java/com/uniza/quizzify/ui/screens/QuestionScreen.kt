@@ -36,21 +36,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.utils.AnswerButton
+import com.uniza.quizzify.ui.utils.BlueIconButton
 import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.QuestionText
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
 fun QuestionScreen(navController: NavController) {
 
-    val scrollState = rememberScrollState()
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-
+    ScrollableColumn {
         CustomTopBar(navController = navController, navigateTo = "categories", title = /*TODO*/"[Category name]")
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -66,13 +60,7 @@ fun QuestionScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center) {
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(text = /*TODO*/"Question text Question text\nQuestion text Question text\nQuestion text Question text",
-                    fontSize = 25.sp)
-            }
-        }
+        QuestionText(text = /*TODO*/"Question text Question text\nQuestion text Question text")
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -86,21 +74,10 @@ fun QuestionScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Box(modifier = Modifier
-                .border(1.dp, Color.Black, RoundedCornerShape(12.dp))
-                .height(40.dp)
-                .width(60.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(colorResource(id = R.color.dark_blue))
-                .clickable { /*TODO*/ },
-                contentAlignment = Alignment.Center) {
-                Icon(
-                    modifier = Modifier.size(50.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Sign out",
-                    tint = colorResource(id = R.color.white)
-                )
-            }
+            val arrow = Icons.AutoMirrored.Filled.ArrowForward/*TODO*/
+            BlueIconButton(width = 60.dp, height = 40.dp, description = "Next", icon = arrow, onClick = {/*TODO*/})
+
+
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -120,6 +97,7 @@ fun QuestionScreen(navController: NavController) {
         AnswerButton(text = "Answer4"/*TODO*/, onClick = { /*TODO*/ })
 
         Spacer(modifier = Modifier.height(20.dp))
+
     }
 }
 

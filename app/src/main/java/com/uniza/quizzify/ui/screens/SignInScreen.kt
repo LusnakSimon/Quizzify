@@ -1,5 +1,6 @@
 package com.uniza.quizzify.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,62 +28,35 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
 import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.PasswordTextField
+import com.uniza.quizzify.ui.utils.ScrollableColumn
+import com.uniza.quizzify.ui.utils.UsernameTextField
 
 @Composable
 fun SignInScreen(navController: NavController) {
-    val logoPadding = 8.dp
-    val buttonSpacing = 30.dp
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        
+    ScrollableColumn {
+
         CustomTopBar(navController = navController, navigateTo = "initial", title = "Sign In")
-        
+
         Spacer(modifier = Modifier.height(10.dp))
 
         AppLogo(modifier = Modifier.size(400.dp))
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Username") },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.75f)
-        )
+        UsernameTextField(label = "Username", username = username, onUsernameChange = { username = it })
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.75f)
-        )
+        PasswordTextField(label = "Password", password = password, onPasswordChange = {password = it})
 
-        Spacer(modifier = Modifier.height(buttonSpacing))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        BlueButton(text = "Sign In", width = 0.75f, onClick = {navController.navigate("mainMenu")})
+        BlueButton(text = "Sign In", onClick = {navController.navigate("mainMenu")})
 
         Spacer(modifier = Modifier.height(10.dp))
     }

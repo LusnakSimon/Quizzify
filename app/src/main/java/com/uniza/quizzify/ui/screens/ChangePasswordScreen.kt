@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.BlueButton
 import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.PasswordTextField
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
 fun ChangePasswordScreen(navController: NavController) {
@@ -33,64 +35,26 @@ fun ChangePasswordScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
     var confirmNewPassword by remember { mutableStateOf("") }
-    val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
+    ScrollableColumn {
 
         CustomTopBar(navController = navController, navigateTo = "profile", title = "Change password", titleSize = 30.sp)
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.75f)
-        )
+        PasswordTextField(label = "Password", password = password, onPasswordChange = {password = it})
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedTextField(
-            value = newPassword,
-            onValueChange = { newPassword = it },
-            label = { Text("New password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.75f)
-        )
+        PasswordTextField(label = "New password", password = newPassword, onPasswordChange = {newPassword = it})
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedTextField(
-            value = confirmNewPassword,
-            onValueChange = { confirmNewPassword = it },
-            label = { Text("Confirm new password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.75f)
-        )
+        PasswordTextField(label = "Confirm new password", password = confirmNewPassword, onPasswordChange = {confirmNewPassword = it})
+
         Spacer(modifier = Modifier.height(20.dp))
 
-        BlueButton(text = "Confirm", width = 0.75f, onClick = {/*TODO*/})
+        BlueButton(text = "Confirm", onClick = {/*TODO*/})
 
         Spacer(modifier = Modifier.height(20.dp))
     }
