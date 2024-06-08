@@ -1,54 +1,36 @@
 package com.uniza.quizzify.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.uniza.quizzify.R
-import com.uniza.quizzify.ui.utils.BlueButton
+import com.uniza.quizzify.ui.utils.BlueButtonColumn
 import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.ProfileImage
 import com.uniza.quizzify.ui.utils.ScrollableColumn
+import com.uniza.quizzify.ui.utils.UserProfileInfo
 
 @Composable
 fun ProfileScreen(navController: NavController) {
 
+    BackHandler {
+        navController.navigate("mainMenu")
+    }
+
     ScrollableColumn {
+
         CustomTopBar(navController = navController, navigateTo = "mainMenu", title = "Profile")
 
-        Spacer(modifier = Modifier.height(20.dp))
+        ProfileImage(painter = painterResource(id = android.R.drawable.ic_menu_camera)/*TODO*/)
 
-        Image(
-            painter = painterResource(id = R.drawable.app_logo_text),
-            contentDescription = "App Logo",
-            modifier = Modifier.fillMaxSize(0.75f)
+        UserProfileInfo(username = "Username"/*TODO*/, rating = 100/*TODO*/)
+
+        BlueButtonColumn(
+            navController= navController,
+            button1Text = "Change username",
+            button2Text = "Change password",
+            button1Destination = "changeUsername",
+            button2Destination = "changePassword"
         )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(text ="Username", fontSize = 30.sp /*TODO*/)
-
-        Text(text ="Your rating: 100" /*TODO*/)
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        BlueButton(text = "Change username", onClick = {navController.navigate("changeUsername")})
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        BlueButton(text = "Change password", onClick = {navController.navigate("changePassword")})
-
-        Spacer(modifier = Modifier.height(20.dp))
     }
 }

@@ -1,5 +1,6 @@
 package com.uniza.quizzify.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +15,10 @@ import com.uniza.quizzify.ui.utils.SettingRow
 @Composable
 fun SettingsScreen(navController: NavController) {
 
+    BackHandler {
+        navController.navigate("mainMenu")
+    }
+
     var darkThemeEnabled by remember { mutableStateOf(false) }
     var notificationsEnabled by remember { mutableStateOf(false) }
 
@@ -27,6 +32,7 @@ fun SettingsScreen(navController: NavController) {
             isChecked = darkThemeEnabled,
             onCheckedChange = { darkThemeEnabled = it }
         )
+
         SettingRow(
             settingName = "Notifications",
             isChecked = notificationsEnabled,

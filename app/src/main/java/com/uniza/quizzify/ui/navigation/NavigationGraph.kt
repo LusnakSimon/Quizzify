@@ -1,12 +1,23 @@
-package com.uniza.quizzify.ui.screens
+package com.uniza.quizzify.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.uniza.quizzify.ui.screens.CategoryScreen
+import com.uniza.quizzify.ui.screens.ChangePasswordScreen
+import com.uniza.quizzify.ui.screens.ChangeUsernameScreen
+import com.uniza.quizzify.ui.screens.InitialScreen
+import com.uniza.quizzify.ui.screens.LeaderboardScreen
+import com.uniza.quizzify.ui.screens.MainMenuScreen
+import com.uniza.quizzify.ui.screens.ProfileScreen
+import com.uniza.quizzify.ui.screens.QuestionScreen
+import com.uniza.quizzify.ui.screens.RegisterScreen
+import com.uniza.quizzify.ui.screens.SettingsScreen
+import com.uniza.quizzify.ui.screens.SignInScreen
 
 @Composable
-fun NavGraph(startDestination: String = "initial") {
+fun NavigationGraph(startDestination: String = "initial") {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
@@ -20,6 +31,6 @@ fun NavGraph(startDestination: String = "initial") {
         composable("changeUsername") { ChangeUsernameScreen(navController) }
         composable("changePassword") { ChangePasswordScreen(navController) }
         composable("categories") { CategoryScreen(navController) }
-        composable("question") { QuestionScreen(navController)}
+        composable("question"/*TODO*/) { QuestionScreen(navController/*TODO*/) }
     }
 }

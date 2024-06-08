@@ -8,23 +8,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -36,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -48,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
+import com.uniza.quizzify.data.User
 import com.uniza.quizzify.ui.theme.DarkBlue
 
 @Composable
@@ -79,6 +89,9 @@ fun CustomTopBar(navController : NavController, navigateTo : String, title : Str
 
 @Composable
 fun BlueButton(text : String, onClick : () -> Unit) {
+
+    Spacer(modifier = Modifier.height(20.dp))
+
     Button(
         onClick = { onClick() },
         modifier = Modifier
@@ -90,15 +103,22 @@ fun BlueButton(text : String, onClick : () -> Unit) {
     ) {
         Text(text = text, fontSize = 18.sp)
     }
+
+    Spacer(modifier = Modifier.height(10.dp))
 }
 
 @Composable
-fun AppLogo(modifier : Modifier) {
+fun AppLogo() {
+
+    Spacer(modifier = Modifier.height(20.dp))
+
     Image(
         painter = painterResource(id = R.drawable.app_logo_text),
         contentDescription = "App Logo",
-        modifier = modifier
+        modifier = Modifier.size(360.dp)
     )
+
+    Spacer(modifier = Modifier.height(20.dp))
 }
 
 @Composable
@@ -215,6 +235,9 @@ fun UsernameTextField(
         singleLine = true,
         modifier = Modifier.fillMaxWidth(0.75f)
     )
+
+    Spacer(modifier = Modifier.height(10.dp))
+
 }
 
 @Composable
@@ -234,6 +257,9 @@ fun PasswordTextField(
         singleLine = true,
         modifier = Modifier.fillMaxWidth(0.75f)
     )
+
+    Spacer(modifier = Modifier.height(10.dp))
+
 }
 
 @Composable
@@ -260,4 +286,290 @@ fun QuestionText(text : String) {
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         Text(text = text, fontSize = 25.sp)
     }
+}
+
+@Composable
+fun QuestionImage(painter : Painter) {
+
+    Image(
+        painter = painter,
+        contentDescription = "App Logo",
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(220.dp)
+            .padding(5.dp)
+    )
+
+    Spacer(modifier = Modifier.height(5.dp))
+}
+
+@Composable
+fun AnswerButtons(
+                  answer1Text : String,
+                  answer2Text : String,
+                  answer3Text : String,
+                  answer4Text : String,
+                  onAnswer1Click : () -> Unit,
+                  onAnswer2Click : () -> Unit,
+                  onAnswer3Click : () -> Unit,
+                  onAnswer4Click : () -> Unit
+                  ) {
+
+    Spacer(modifier = Modifier.height(100.dp))
+
+    AnswerButton(text = answer1Text, onClick = { onAnswer1Click() })
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    AnswerButton(text = answer2Text, onClick = { onAnswer2Click() })
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    AnswerButton(text = answer3Text, onClick = { onAnswer3Click() })
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    AnswerButton(text = answer4Text, onClick = { onAnswer4Click() })
+
+    Spacer(modifier = Modifier.height(20.dp))
+}
+
+@Composable
+fun ProfileImage(painter : Painter) {
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Image(
+        painter = painter,
+        contentDescription = "Profile picture",
+        modifier = Modifier.fillMaxSize(0.75f)
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+}
+
+@Composable
+fun BlueIconButtonRow(onSignOutClick : () -> Unit,onProfileClick : () -> Unit,onSettingsClick : () -> Unit ) {
+
+    Spacer(modifier = Modifier.height(5.dp))
+
+    Row(
+        modifier = Modifier.fillMaxWidth(0.75f),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        val so = Icons.AutoMirrored.Filled.ExitToApp/*TODO*/
+        BlueIconButton(width = 80.dp, height = 80.dp, description = "Sign out", icon = so, onClick = {onSignOutClick()})
+        val po = Icons.Default.Person/*TODO*/
+        BlueIconButton(width = 80.dp, height = 80.dp, description = "Profile", icon = po, onClick = {onProfileClick()})
+        val st = Icons.Default.Settings/*TODO*/
+        BlueIconButton(width = 80.dp, height = 80.dp, description = "Settings", icon = st, onClick = {onSettingsClick()})
+    }
+
+    Spacer(modifier = Modifier.height(30.dp))
+}
+
+@Composable
+fun BlueButtonColumn(
+    navController: NavController,
+    button1Text : String,
+    button2Text : String,
+    button1Destination : String,
+    button2Destination: String) {
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    BlueButton(text = button1Text, onClick = {navController.navigate(button1Destination)})
+
+    BlueButton(text = button2Text, onClick = {navController.navigate(button2Destination)})
+
+    Spacer(modifier = Modifier.height(10.dp))
+}
+
+@Composable
+fun UserProfileInfo(username : String, rating : Int) {
+
+    Text(text =username, fontSize = 30.sp)
+
+    Text(text ="Your rating is: $rating")
+}
+
+@Composable
+fun LeaderboardHeader() {
+    Spacer(modifier = Modifier.height(10.dp))
+    Text(text = "Top 100", fontSize = 30.sp, modifier = Modifier
+        .border(1.dp, Color.Black, RoundedCornerShape(5.dp))
+        .clip(RoundedCornerShape(5.dp))
+        .background(DarkBlue),
+        color = Color.White)
+    Row(
+        modifier = Modifier
+            .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .background(DarkBlue)
+            .fillMaxWidth(0.8f)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = "Rank", color = Color.White)
+        Text(text = "Username", color = Color.White)
+        Text(text = "Rating", color = Color.White)
+    }
+}
+
+@Composable
+fun LeaderboardRow(rank : Int, username: String, rating : Int, color : Color, width : Float) {
+    Row(
+        modifier = Modifier
+            .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .fillMaxWidth(width)
+            .background(color)
+            .padding(20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = "$rank")
+        Text(text = username)
+        Text(text = "$rating")
+    }
+}
+
+@Composable
+fun Leaderboard(users : List<User>, user: User) {
+
+    LeaderboardHeader()
+
+    LazyColumn(
+        modifier = Modifier
+            .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color(0xFFBBCBBB)/*TODO*/)
+            .fillMaxWidth(0.8f)
+            .height(500.dp)
+            .padding(1.dp)
+
+    ) {
+        items(users) { user ->
+            LeaderboardRow(rank = 1/*TODO*/,username = user.username, rating = user.rating, color = Color.LightGray/*TODO*/, 1f)
+        }
+    }
+    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} (You)", rating = user.rating, color = Color.Green, 0.8f)
+    Spacer(modifier = Modifier.height(10.dp))
+}
+
+@Composable
+fun ScrollableCategoryColumn(items: List<CardItem>, onItemClick: (CardItem) -> Unit, onResetClick: () -> Unit) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(1000.dp),
+        contentPadding = PaddingValues(4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        items(items) { item ->
+            CategoryCard(item = item, onClick = { onItemClick(item) }, onResetClick)
+        }
+
+    }
+}
+
+@Composable
+fun CategoryCard(item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .border(1.dp, Color.DarkGray/*TODO*/, RoundedCornerShape(8.dp))
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.LightGray/*TODO*/)
+            .clickable { onClick() }
+            .padding(6.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.LightGray/*TODO*/)
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CategoryImage(item = item)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CategoryInfoRow(item = item, onResetClick = onResetClick)
+
+        }
+    }
+}
+
+@Composable
+fun CategoryImage(item: CardItem) {
+    Image(
+        painterResource(id = item.imageResId),
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .clip(RoundedCornerShape(8.dp))
+    )
+}
+@Composable
+fun CategoryInfoRow(item: CardItem, onResetClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Text(text = item.title, fontSize = 35.sp, color = Color.Black)
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(text = "${item.progress}/${10/*TODO*/}", fontSize = 20.sp, color = Color.Black)
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        ResetButton(onResetClick = onResetClick)
+
+    }
+}
+
+@Composable
+fun ResetButton(onResetClick: () -> Unit) {
+    IconButton(onClick = { onResetClick() }) {
+
+        Icon(
+            modifier = Modifier.size(50.dp),
+            imageVector = Icons.Default.Refresh,
+            contentDescription = "Reset",
+            tint = colorResource(id = R.color.black)
+        )
+    }
+}
+data class CardItem(/*TODO*/
+                    val title: String,
+                    val progress: Int,
+                    val imageResId: Int
+)
+
+@Composable
+fun CategoryProgress(questionNumber : Int, questionsTotal : Int) {
+    Spacer(modifier = Modifier.height(10.dp))
+    
+    Text(
+        text = "$questionNumber/$questionsTotal",
+        fontSize = 20.sp
+    )
+}
+
+@Composable
+fun CurrentUserText(username : String) {
+    Text(modifier = Modifier.padding(10.dp),
+        text = "Signed in as $username",
+        fontSize = 18.sp,
+        color = Color.Gray/*TODO*/
+    )
 }
