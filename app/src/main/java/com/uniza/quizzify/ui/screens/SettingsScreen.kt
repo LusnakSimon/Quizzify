@@ -24,8 +24,6 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
         navController.navigate("mainMenu")
     }
 
-
-
     ScrollableColumn {
 
         CustomTopBar(navController = navController, navigateTo = "mainMenu", title = stringResource(

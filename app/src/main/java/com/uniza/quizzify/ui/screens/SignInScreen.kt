@@ -1,28 +1,23 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
-import com.uniza.quizzify.ui.utils.AppLogo
-import com.uniza.quizzify.ui.utils.BlueButton
-import com.uniza.quizzify.ui.utils.CustomTopBar
-import com.uniza.quizzify.ui.utils.PasswordTextField
-import com.uniza.quizzify.ui.utils.ScrollableColumn
-import com.uniza.quizzify.ui.utils.UsernameTextField
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import com.uniza.quizzify.ui.utils.AppLogo
+import com.uniza.quizzify.ui.utils.BlueButton
+import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.ErrorMessage
+import com.uniza.quizzify.ui.utils.PasswordTextField
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.ui.utils.SignInUtils
+import com.uniza.quizzify.ui.utils.UsernameTextField
 import kotlinx.coroutines.launch
 
 @Composable

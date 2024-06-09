@@ -79,18 +79,18 @@ fun NavigationGraph(startDestination: String = "initial") {
             LeaderboardScreen(navController, leaderboardViewModel)
         }
 
-        composable("profile") { ProfileScreen(navController) }
+        composable("profile") { ProfileScreen(navController, userViewModel) }
 
         composable("changeUsername") {
             val changeUsernameViewModelFactory = ViewModelFactory { ChangeUsernameViewModel()}
             val changeUsernameViewModel : ChangeUsernameViewModel = viewModel(factory = changeUsernameViewModelFactory)
-            ChangeUsernameScreen(navController, changeUsernameViewModel)
+            ChangeUsernameScreen(navController, changeUsernameViewModel, userViewModel)
         }
 
         composable("changePassword") {
             val changePasswordViewModelFactory = ViewModelFactory { ChangePasswordViewModel() }
             val changePasswordViewModel : ChangePasswordViewModel = viewModel(factory = changePasswordViewModelFactory)
-            ChangePasswordScreen(navController, changePasswordViewModel)
+            ChangePasswordScreen(navController, changePasswordViewModel, userViewModel)
         }
 
         composable("categories") {

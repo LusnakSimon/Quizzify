@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class RegisterViewModel : ViewModel() {
 
     var errorMessage : MutableState<String> = mutableStateOf("")
-
+        private set
     var showErrorText : MutableState<Boolean> = mutableStateOf(false)
         private set
     var username: MutableState<String> = mutableStateOf("")

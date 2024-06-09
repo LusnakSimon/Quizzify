@@ -39,6 +39,14 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
         return userRepository.getUserByUsername(username) != null
     }
 
+    suspend fun updateUsername(userId: Int, newUsername: String) {
+        userRepository.updateUsername(userId, newUsername)
+    }
+
+    suspend fun updatePassword(userId: Int, newPassword: String) {
+        userRepository.updatePassword(userId, newPassword)
+    }
+
 
     fun signOut() {
         user.value = null

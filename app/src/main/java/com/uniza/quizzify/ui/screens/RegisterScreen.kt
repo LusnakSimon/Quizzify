@@ -1,11 +1,9 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
@@ -29,6 +27,7 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
 
     val showErrorText by registerViewModel.showErrorText
     val errorMessage by registerViewModel.errorMessage
+
     val username by registerViewModel.username
     val password by registerViewModel.password
     val confirmPassword by registerViewModel.confirmPassword

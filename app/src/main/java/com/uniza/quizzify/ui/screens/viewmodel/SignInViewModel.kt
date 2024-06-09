@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 class SignInViewModel() : ViewModel() {
 
     var errorMessage : MutableState<String> = mutableStateOf("")
+        private set
 
     var showErrorText : MutableState<Boolean> = mutableStateOf(false)
         private set

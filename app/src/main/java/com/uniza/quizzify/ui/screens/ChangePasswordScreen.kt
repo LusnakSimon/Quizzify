@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,10 +21,24 @@ import com.uniza.quizzify.ui.utils.PasswordTextField
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.ChangePasswordViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import com.uniza.quizzify.ui.utils.ChangePasswordUtils
+import com.uniza.quizzify.ui.utils.ErrorMessage
+import kotlinx.coroutines.launch
 
 @Composable
-fun ChangePasswordScreen(navController: NavController, changePasswordViewModel: ChangePasswordViewModel) {
+fun ChangePasswordScreen(
+    navController: NavController,
+    changePasswordViewModel: ChangePasswordViewModel,
+    userViewModel: UserViewModel
+) {
 
+    val coroutineScope = rememberCoroutineScope()
+
+    val showErrorText by changePasswordViewModel.showErrorText
+    val errorMessage by changePasswordViewModel.errorMessage
+
+    val user by userViewModel.user
     val password by changePasswordViewModel.password
     val newPassword by changePasswordViewModel.newPassword
     val confirmNewPassword by changePasswordViewModel.confirmNewPassword
@@ -34,9 +49,16 @@ fun ChangePasswordScreen(navController: NavController, changePasswordViewModel: 
 
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "profile", title = stringResource(
-            id = R.string.ChangePassword
-        ), titleSize = 30.sp)
+        CustomTopBar(
+            navController = navController,
+            navigateTo = "profile",
+            title = stringResource(id = R.string.ChangePassword),
+            titleSize = 30.sp
+        )
+
+        if (showErrorText) {
+            ErrorMessage(text = errorMessage)
+        }
 
         PasswordTextField(
             label = stringResource(id = R.string.Password),
@@ -59,7 +81,25 @@ fun ChangePasswordScreen(navController: NavController, changePasswordViewModel: 
             onPasswordChange = {changePasswordViewModel.setConfirmNewPassword(it)}
         )
 
-        BlueButton(text = stringResource(id = R.string.Confirm), onClick = {/*TODO*/})
+        BlueButton(
+            text = stringResource(id = R.string.Confirm),
+            onClick = {
+                coroutineScope.launch {
+                    user?.let {
+                        ChangePasswordUtils.changePassword(
+                            userId= it.userId,
+                            username= it.username,
+                            password= password,
+                            newPassword= newPassword,
+                            confirmNewPassword = confirmNewPassword,
+                            changePasswordViewModel = changePasswordViewModel,
+                            userViewModel= userViewModel,
+                            navController = navController
+                        )
+                    }
+                }
+            }
+        )
 
     }
 }

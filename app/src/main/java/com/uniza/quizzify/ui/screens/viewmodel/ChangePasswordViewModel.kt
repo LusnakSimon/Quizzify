@@ -5,6 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
 class ChangePasswordViewModel : ViewModel() {
+
+    var errorMessage : MutableState<String> = mutableStateOf("")
+        private set
+    var showErrorText : MutableState<Boolean> = mutableStateOf(false)
+        private set
     var password: MutableState<String> = mutableStateOf("")
         private set
 
@@ -24,5 +29,13 @@ class ChangePasswordViewModel : ViewModel() {
 
     fun setConfirmNewPassword(value : String) {
         confirmNewPassword.value = value
+    }
+
+    fun setShowErrorText(show : Boolean) {
+        showErrorText.value = show
+    }
+
+    fun setErrorMessage(message : String) {
+        errorMessage.value = message
     }
 }
