@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.MainMenuViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButtonColumn
@@ -20,7 +22,12 @@ import com.uniza.quizzify.ui.utils.SignOutDialog
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainMenuScreen(navController: NavController, mainMenuViewModel: MainMenuViewModel, userViewModel: UserViewModel) {
+fun MainMenuScreen(
+    navController: NavController,
+    mainMenuViewModel: MainMenuViewModel,
+    userViewModel: UserViewModel,
+    themeViewModel: ThemeViewModel
+) {
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -35,6 +42,7 @@ fun MainMenuScreen(navController: NavController, mainMenuViewModel: MainMenuView
                     userViewModel.signOut()
                     mainMenuViewModel.toggleShowDialog()
                     navController.navigate("initial")
+                    themeViewModel.setDarkTheme(false)
                 }
             }
         )

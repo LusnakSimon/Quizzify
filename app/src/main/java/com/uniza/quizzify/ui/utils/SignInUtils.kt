@@ -2,6 +2,7 @@ package com.uniza.quizzify.ui.utils
 
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 
 object SignInUtils {
@@ -10,12 +11,14 @@ object SignInUtils {
         password: String,
         userViewModel: UserViewModel,
         signInViewModel: SignInViewModel,
-        navController: NavController
+        navController: NavController,
+        themeViewModel: ThemeViewModel
     ) {
         if (username.isNotEmpty() && password.isNotEmpty()) {
             userViewModel.authenticateUser(username = username, password = password) { authSuccess ->
                 if (authSuccess) {
                     navController.navigate("mainMenu")
+                    userViewModel.user.value?.let { themeViewModel.setDarkTheme(it.darkMode) }
                 } else {
                     signInViewModel.setErrorMessage("Incorrect username or password")
                     signInViewModel.setShowErrorText(true)

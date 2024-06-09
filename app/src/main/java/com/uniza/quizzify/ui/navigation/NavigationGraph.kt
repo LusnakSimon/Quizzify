@@ -27,13 +27,13 @@ import com.uniza.quizzify.ui.screens.viewmodel.LeaderboardViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.MainMenuViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
-import com.uniza.quizzify.ui.screens.viewmodel.SettingsViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.ViewModelFactory
 
 @Composable
-fun NavigationGraph(startDestination: String = "initial") {
+fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "initial") {
 
     val navController = rememberNavController()
 
@@ -52,7 +52,7 @@ fun NavigationGraph(startDestination: String = "initial") {
         composable("signIn") {
             val signInViewModelFactory = ViewModelFactory { SignInViewModel() }
             val signInViewModel: SignInViewModel = viewModel(factory = signInViewModelFactory)
-            SignInScreen(navController, signInViewModel, userViewModel)
+            SignInScreen(navController, signInViewModel, userViewModel, themeViewModel)
         }
 
         composable("register") {
@@ -64,13 +64,11 @@ fun NavigationGraph(startDestination: String = "initial") {
         composable("mainMenu") {
             val mainMenuModelFactory = ViewModelFactory { MainMenuViewModel() }
             val mainMenuViewModel : MainMenuViewModel = viewModel(factory = mainMenuModelFactory)
-            MainMenuScreen(navController, mainMenuViewModel, userViewModel)
+            MainMenuScreen(navController, mainMenuViewModel, userViewModel, themeViewModel)
         }
 
         composable("settings") {
-            val settingsViewModelFactory = ViewModelFactory { SettingsViewModel() }
-            val settingsViewModel: SettingsViewModel = viewModel(factory = settingsViewModelFactory)
-            SettingsScreen(navController, settingsViewModel)
+            SettingsScreen(navController, themeViewModel, userViewModel)
         }
 
         composable("leaderboard") {

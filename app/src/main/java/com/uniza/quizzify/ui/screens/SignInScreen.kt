@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -21,7 +22,12 @@ import com.uniza.quizzify.ui.utils.UsernameTextField
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignInScreen(navController: NavController, signInViewModel: SignInViewModel, userViewModel: UserViewModel) {
+fun SignInScreen(
+    navController: NavController,
+    signInViewModel: SignInViewModel,
+    userViewModel: UserViewModel,
+    themeViewModel: ThemeViewModel
+    ) {
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -70,7 +76,8 @@ fun SignInScreen(navController: NavController, signInViewModel: SignInViewModel,
                         password = password,
                         userViewModel = userViewModel,
                         signInViewModel = signInViewModel,
-                        navController = navController
+                        navController = navController,
+                        themeViewModel = themeViewModel
                     )
                 }
             }

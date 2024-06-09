@@ -16,6 +16,13 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
 
     var user: MutableState<User?> = mutableStateOf(null)
         private set
+
+    var isDarkTheme = user.value?.darkMode
+        private set
+
+    var notifications = user.value?.notifications
+        private set
+
     fun authenticateUser(username: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val authenticatedUser = userRepository.authenticateUser(username, password)
@@ -45,6 +52,10 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
 
     suspend fun updatePassword(userId: Int, newPassword: String) {
         userRepository.updatePassword(userId, newPassword)
+    }
+
+    suspend fun updateUserSettings(darkTheme : Boolean, notifications : Boolean) {
+        user.value?.let { userRepository.updateUserSettings(it.userId, darkTheme, notifications) }
     }
 
 

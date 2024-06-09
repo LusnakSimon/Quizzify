@@ -1,24 +1,31 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.ui.utils.SettingRow
 import com.uniza.quizzify.R
-import com.uniza.quizzify.ui.screens.viewmodel.SettingsViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(navController: NavController, settingsViewModel: SettingsViewModel) {
+fun SettingsScreen(
+    navController: NavController,
+    themeViewModel: ThemeViewModel,
+    userViewModel: UserViewModel
+    ) {
 
-    val darkTheme by settingsViewModel.darkTheme
-    val notifications by settingsViewModel.notifications
+    val coroutineScope = rememberCoroutineScope()
+
+    val user by userViewModel.user
 
     BackHandler {
         navController.navigate("mainMenu")
@@ -30,18 +37,30 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
             id = R.string.Settings
         ))
 
-        SettingRow(
+        user?.darkMode?.let {
+            SettingRow(
+                settingName = stringResource(id = R.string.DarkTheme),
+                isChecked = it
+            ) {
+                coroutineScope.launch {
+                    userViewModel.updateUserSettings(it, user!!.notifications)
+                    userViewModel.authenticateUser(user!!.username, user!!.password) {}
+                    themeViewModel.setDarkTheme(it)
+                }
+            }
+        }
 
-            settingName = stringResource(id = R.string.DarkTheme),
-            isChecked = darkTheme,
-            onCheckedChange = { settingsViewModel.toggleDarkTheme() }
-        )
-
-        SettingRow(
-            settingName = stringResource(id = R.string.Notifications),
-            isChecked = notifications,
-            onCheckedChange = { settingsViewModel.toggleNotifications() }
-        )
+        user?.notifications?.let {
+            SettingRow(
+                settingName = stringResource(id = R.string.Notifications),
+                isChecked = it
+            ) {
+                coroutineScope.launch {
+                    userViewModel.updateUserSettings(user!!.darkMode, it)
+                    userViewModel.authenticateUser(user!!.username, user!!.password) {}
+                }
+            }
+        }
     }
 }
 

@@ -62,8 +62,8 @@ import com.uniza.quizzify.R
 import com.uniza.quizzify.data.User
 import com.uniza.quizzify.ui.theme.Black
 import com.uniza.quizzify.ui.theme.DarkBlue
-import com.uniza.quizzify.ui.theme.QuizzifyTheme
 import com.uniza.quizzify.ui.theme.White
+
 
 @Composable
 fun CustomTopBar(
@@ -200,10 +200,13 @@ fun SignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun ScrollableColumn(arrangement : Arrangement.Vertical = Arrangement.Top, content: @Composable ColumnScope.() -> Unit) {
+fun ScrollableColumn(
+    arrangement : Arrangement.Vertical = Arrangement.Top,
+    color : Color = MaterialTheme.colorScheme.background,
+    content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(color)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
