@@ -35,6 +35,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -48,6 +49,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -59,6 +61,7 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.data.User
 import com.uniza.quizzify.ui.theme.DarkBlue
+import com.uniza.quizzify.ui.theme.QuizzifyTheme
 
 @Composable
 fun CustomTopBar(navController : NavController, navigateTo : String, title : String, titleSize: TextUnit = 35.sp) {
@@ -75,7 +78,7 @@ fun CustomTopBar(navController : NavController, navigateTo : String, title : Str
         IconButton(onClick = { navController.navigate(navigateTo) }) {
             Icon(modifier = Modifier.size(50.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(id = R.string.Back),
                 tint = colorResource(id = R.color.white)
             )
         }
@@ -114,7 +117,7 @@ fun AppLogo() {
 
     Image(
         painter = painterResource(id = R.drawable.app_logo_text),
-        contentDescription = "App Logo",
+        contentDescription = stringResource(id = R.string.AppLogo),
         modifier = Modifier.size(360.dp)
     )
 
@@ -146,20 +149,20 @@ fun AnswerButton(
 fun ResetDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Reset progress") },
-        text = { Text(text = "Are you sure you want reset [category name] category progress?") },
+        title = { Text(text = stringResource(id = R.string.ResetProgress)) },
+        text = { Text(text = stringResource(id = R.string.ResetDialogQuestion)) },
         confirmButton = {
             Button(
                 onClick = onConfirm
             ) {
-                Text("Yes")
+                Text(stringResource(id = R.string.Yes))
             }
         },
         dismissButton = {
             Button(
                 onClick = onDismiss
             ) {
-                Text("Cancel")
+                Text(stringResource(id = R.string.Cancel))
             }
         }
     )
@@ -169,20 +172,20 @@ fun ResetDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
 fun SignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Sign Out") },
-        text = { Text(text = "Are you sure you want to sign out?") },
+        title = { Text(text = stringResource(id = R.string.SignOut)) },
+        text = { Text(text = stringResource(id = R.string.SignOutDialogQuestion)) },
         confirmButton = {
             Button(
                 onClick = onConfirm
             ) {
-                Text("Yes")
+                Text(stringResource(id = R.string.Yes))
             }
         },
         dismissButton = {
             Button(
                 onClick = onDismiss
             ) {
-                Text("Cancel")
+                Text(stringResource(id = R.string.Cancel))
             }
         }
     )
@@ -192,6 +195,7 @@ fun SignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
 fun ScrollableColumn(content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -293,7 +297,7 @@ fun QuestionImage(painter : Painter) {
 
     Image(
         painter = painter,
-        contentDescription = "App Logo",
+        contentDescription = stringResource(id = R.string.AppLogo),
         modifier = Modifier
             .fillMaxWidth()
             .height(220.dp)
@@ -341,7 +345,7 @@ fun ProfileImage(painter : Painter) {
 
     Image(
         painter = painter,
-        contentDescription = "Profile picture",
+        contentDescription = stringResource(id = R.string.ProfilePicture),
         modifier = Modifier.fillMaxSize(0.75f)
     )
 
@@ -359,11 +363,11 @@ fun BlueIconButtonRow(onSignOutClick : () -> Unit,onProfileClick : () -> Unit,on
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         val so = Icons.AutoMirrored.Filled.ExitToApp/*TODO*/
-        BlueIconButton(width = 80.dp, height = 80.dp, description = "Sign out", icon = so, onClick = {onSignOutClick()})
+        BlueIconButton(width = 80.dp, height = 80.dp, description = stringResource(id = R.string.SignOut), icon = so, onClick = {onSignOutClick()})
         val po = Icons.Default.Person/*TODO*/
-        BlueIconButton(width = 80.dp, height = 80.dp, description = "Profile", icon = po, onClick = {onProfileClick()})
+        BlueIconButton(width = 80.dp, height = 80.dp, description = stringResource(id = R.string.Profile), icon = po, onClick = {onProfileClick()})
         val st = Icons.Default.Settings/*TODO*/
-        BlueIconButton(width = 80.dp, height = 80.dp, description = "Settings", icon = st, onClick = {onSettingsClick()})
+        BlueIconButton(width = 80.dp, height = 80.dp, description = stringResource(id = R.string.Settings), icon = st, onClick = {onSettingsClick()})
     }
 
     Spacer(modifier = Modifier.height(30.dp))
@@ -391,13 +395,13 @@ fun UserProfileInfo(username : String, rating : Int) {
 
     Text(text =username, fontSize = 30.sp)
 
-    Text(text ="Your rating is: $rating")
+    Text(text ="${stringResource(id = R.string.YourRating)} $rating")
 }
 
 @Composable
 fun LeaderboardHeader() {
     Spacer(modifier = Modifier.height(10.dp))
-    Text(text = "Top 100", fontSize = 30.sp, modifier = Modifier
+    Text(text = stringResource(id = R.string.Top100), fontSize = 30.sp, modifier = Modifier
         .border(1.dp, Color.Black, RoundedCornerShape(5.dp))
         .clip(RoundedCornerShape(5.dp))
         .background(DarkBlue),
@@ -412,9 +416,9 @@ fun LeaderboardHeader() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "Rank", color = Color.White)
-        Text(text = "Username", color = Color.White)
-        Text(text = "Rating", color = Color.White)
+        Text(text = stringResource(id = R.string.Rank), color = Color.White)
+        Text(text = stringResource(id = R.string.Username), color = Color.White)
+        Text(text = stringResource(id = R.string.Rating), color = Color.White)
     }
 }
 
@@ -455,7 +459,7 @@ fun Leaderboard(users : List<User>, user: User) {
             LeaderboardRow(rank = 1/*TODO*/,username = user.username, rating = user.rating, color = Color.LightGray/*TODO*/, 1f)
         }
     }
-    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} (You)", rating = user.rating, color = Color.Green, 0.8f)
+    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} ${stringResource(id = R.string.You)}", rating = user.rating, color = Color.Green, 0.8f)
     Spacer(modifier = Modifier.height(10.dp))
 }
 
@@ -508,7 +512,7 @@ fun CategoryCard(item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) 
 @Composable
 fun CategoryImage(item: CardItem) {
     Image(
-        painterResource(id = item.imageResId),
+        painter = painterResource(id = item.imageResId),
         contentDescription = null,
         modifier = Modifier
             .fillMaxWidth()
@@ -544,8 +548,8 @@ fun ResetButton(onResetClick: () -> Unit) {
         Icon(
             modifier = Modifier.size(50.dp),
             imageVector = Icons.Default.Refresh,
-            contentDescription = "Reset",
-            tint = colorResource(id = R.color.black)
+            contentDescription = stringResource(id = R.string.Reset),
+            tint = colorResource(id = R.color.black/*TODO*/)
         )
     }
 }
@@ -568,7 +572,7 @@ fun CategoryProgress(questionNumber : Int, questionsTotal : Int) {
 @Composable
 fun CurrentUserText(username : String) {
     Text(modifier = Modifier.padding(10.dp),
-        text = "Signed in as $username",
+        text = "${stringResource(id = R.string.SignedInAs)} $username",
         fontSize = 18.sp,
         color = Color.Gray/*TODO*/
     )

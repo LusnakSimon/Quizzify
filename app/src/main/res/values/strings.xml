@@ -1,3 +1,51 @@
 <resources>
+
     <string name="app_name">Quizzify</string>
+
+    <string name="mainMenu">mainMenu</string>
+    <string name="initial">initial</string>
+    <string name="profile">profile</string>
+    <string name="settings">settings</string>
+    <string name="changeUsername">changeUsername</string>
+    <string name="changePassword">changePassword</string>
+    <string name="categories">categories</string>
+    <string name="leaderboard">leaderboard</string>
+    <string name="question">question</string>
+    <string name="register">register</string>
+    <string name="signIn">leaderboard</string>
+
+    <string name="Profile">Profile</string>
+    <string name="Settings">Settings</string>
+    <string name="ChangeUsername">Change username</string>
+    <string name="ChangePassword">Change password</string>
+    <string name="Categories">Categories</string>
+    <string name="Leaderboard">Leaderboard</string>
+    <string name="Register">Register</string>
+    <string name="SignIn">Sign In</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Reset">Reset</string>
+    <string name="Back">Back</string>
+    <string name="AppLogo">App Logo</string>
+    <string name="ResetProgress">Reset progress</string>
+    <string name="ResetDialogQuestion">Are you sure you want reset your progress in this category?</string>
+    <string name="Yes">Yes</string>
+    <string name="Cancel">Cancel</string>
+    <string name="SignOut">Sign out</string>
+    <string name="SignOutDialogQuestion">Are you sure you want to sign out?</string>
+    <string name="ProfilePicture">Profile picture</string>
+    <string name="YourRating">Your rating is: </string>
+    <string name="Username">Username</string>
+    <string name="Rating">Rating</string>
+    <string name="You"> (You)</string>
+    <string name="SignedInAs">Signed in as </string>
+    <string name="Rank">Rank</string>
+    <string name="Password">Password</string>
+    <string name="NewPassword">New password</string>
+    <string name="ConfirmNewPassword">Confirm new password</string>
+    <string name="NewUsername">New username</string>
+    <string name="Play">Play</string>
+    <string name="ConfirmPassword">Confirm password</string>
+    <string name="DarkTheme">Dark Theme</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Top100">Top 100</string>
 </resources>

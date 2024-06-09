@@ -3,10 +3,7 @@ package com.uniza.quizzify.ui.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -14,28 +11,42 @@ import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.PasswordTextField
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.ui.utils.UsernameTextField
+import com.uniza.quizzify.R
+import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(navController: NavController, signInViewModel: SignInViewModel) {
+
+    val username by signInViewModel.username
+    val password by signInViewModel.password
 
     BackHandler {
         navController.navigate("initial")
     }
 
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "initial", title = "Sign In")
+        CustomTopBar(
+            navController = navController,
+            navigateTo = "initial",
+            title = stringResource(id = R.string.SignIn)
+        )
 
         AppLogo()
 
-        UsernameTextField(label = "Username", username = username, onUsernameChange = { username = it })
+        UsernameTextField(
+            label = stringResource(id = R.string.Username),
+            username = username,
+            onUsernameChange = { signInViewModel.setUsername(it) }
+        )
 
-        PasswordTextField(label = "Password", password = password, onPasswordChange = {password = it})
+        PasswordTextField(
+            label = stringResource(id = R.string.Password),
+            password = password,
+            onPasswordChange = {signInViewModel.setPassword(it)}
+        )
 
-        BlueButton(text = "Sign In", onClick = {navController.navigate("mainMenu")})
+        BlueButton(text = stringResource(id = R.string.SignIn), onClick = {navController.navigate("mainMenu")})
 
     }
 }

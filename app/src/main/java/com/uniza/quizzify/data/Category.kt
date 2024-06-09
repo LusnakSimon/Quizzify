@@ -8,5 +8,5 @@ data class Category(
     @PrimaryKey(autoGenerate = true) val categoryId: Int = 0,
     val categoryName: String,
     val description: String,
-    val imageUrl: String
+    val imageId: Int
 )

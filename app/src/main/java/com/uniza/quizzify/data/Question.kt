@@ -16,5 +16,5 @@ data class Question(
     @PrimaryKey(autoGenerate = true) val questionId: Int = 0,
     val categoryId: Int,
     val questionText: String,
-    val imageUrl: String?
+    val imageId: Int
 )

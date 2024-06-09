@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
 import com.uniza.quizzify.ui.utils.AnswerButtons
 import com.uniza.quizzify.ui.utils.CategoryProgress
 import com.uniza.quizzify.ui.utils.CustomTopBar
@@ -12,7 +13,8 @@ import com.uniza.quizzify.ui.utils.QuestionText
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
-fun QuestionScreen(navController: NavController) {
+fun QuestionScreen(navController: NavController, questionViewModel: QuestionViewModel) {
+
 
     BackHandler {
         navController.navigate("categories")

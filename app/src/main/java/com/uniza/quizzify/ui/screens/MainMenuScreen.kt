@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButtonColumn
@@ -13,7 +14,7 @@ import com.uniza.quizzify.ui.utils.BlueIconButtonRow
 import com.uniza.quizzify.ui.utils.CurrentUserText
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.ui.utils.SignOutDialog
-
+import com.uniza.quizzify.R
 @Composable
 fun MainMenuScreen(navController: NavController) {
 
@@ -40,8 +41,8 @@ fun MainMenuScreen(navController: NavController) {
 
         BlueButtonColumn(
             navController = navController,
-            button1Text = "Play",
-            button2Text = "Leaderboard",
+            button1Text = stringResource(id = R.string.Play),
+            button2Text = stringResource(id = R.string.Leaderboard),
             button1Destination = "categories",
             button2Destination = "leaderboard"
         )
