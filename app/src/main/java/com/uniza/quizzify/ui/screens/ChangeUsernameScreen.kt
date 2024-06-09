@@ -73,7 +73,7 @@ fun ChangeUsernameScreen(
                     user?.let {
                         ChangeUsernameUtils.changeUsername(
                             userId = it.userId,
-                            username = newUsername,
+                            newUsername = newUsername,
                             password = password,
                             changeUsernameViewModel = changeUsernameViewModel,
                             userViewModel = userViewModel,

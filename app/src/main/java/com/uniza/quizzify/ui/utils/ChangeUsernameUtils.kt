@@ -7,16 +7,20 @@ import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 object ChangeUsernameUtils {
     suspend fun changeUsername(
         userId : Int,
-        username : String,
-        password : String,
-        changeUsernameViewModel: ChangeUsernameViewModel,
+        newUsername: String,
+        password: String,
         userViewModel: UserViewModel,
+        changeUsernameViewModel: ChangeUsernameViewModel,
         navController: NavController
     ) {
-        if(password == (userViewModel.user.value?.password ?: String)) {
-            if(!userViewModel.isUsernameTaken(username)) {
-                userViewModel.updateUsername(userId, username)
-                userViewModel.authenticateUser(username, password) {
+        val errorMessage = when {
+            newUsername.isEmpty() || password.isEmpty()  -> "Please fill out all fields."
+            newUsername.length < 3 -> "Username is too short."
+            password != (userViewModel.user.value?.password ?: String) -> "Incorrect password."
+            userViewModel.isUsernameTaken(newUsername) -> "Username is already taken."
+            else -> {
+                userViewModel.updateUsername(userId, newUsername)
+                userViewModel.authenticateUser(newUsername, password) {
                         authSuccess ->
                     if (authSuccess) {
                         navController.navigate("profile")
@@ -25,14 +29,11 @@ object ChangeUsernameUtils {
                         changeUsernameViewModel.setShowErrorText(true)
                     }
                 }
-            } else {
-                changeUsernameViewModel.setErrorMessage("Username is already taken")
-                changeUsernameViewModel.setShowErrorText(true)
+                return
             }
-        } else {
-            changeUsernameViewModel.setErrorMessage("Incorrect password")
-            changeUsernameViewModel.setShowErrorText(true)
         }
-
+        changeUsernameViewModel.setErrorMessage(errorMessage)
+        changeUsernameViewModel.setShowErrorText(true)
     }
 }
+

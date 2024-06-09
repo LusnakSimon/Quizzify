@@ -12,13 +12,21 @@ object SignInUtils {
         signInViewModel: SignInViewModel,
         navController: NavController
     ) {
-        userViewModel.authenticateUser(username = username, password = password) { authSuccess ->
-            if (authSuccess) {
-                navController.navigate("mainMenu")
-            } else {
-                signInViewModel.setErrorMessage("Incorrect username or password")
-                signInViewModel.setShowErrorText(true)
+        if (username.isNotEmpty() && password.isNotEmpty()) {
+            userViewModel.authenticateUser(username = username, password = password) { authSuccess ->
+                if (authSuccess) {
+                    navController.navigate("mainMenu")
+                } else {
+                    signInViewModel.setErrorMessage("Incorrect username or password")
+                    signInViewModel.setShowErrorText(true)
+                }
             }
+        } else {
+            signInViewModel.setErrorMessage("Please fill all the fields")
+            signInViewModel.setShowErrorText(true)
         }
+
     }
 }
+
+
