@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -42,6 +43,7 @@ fun ChangeUsernameScreen(navController: NavController, changeUsernameViewModel: 
         PasswordTextField(
             label = stringResource(id = R.string.Password),
             password = password,
+            action = ImeAction.Done,
             onPasswordChange = {changeUsernameViewModel.setPassword(it)}
         )
 

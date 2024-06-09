@@ -93,7 +93,7 @@ fun CustomTopBar(navController : NavController, navigateTo : String, title : Str
 @Composable
 fun BlueButton(text : String, onClick : () -> Unit) {
 
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Button(
         onClick = { onClick() },
@@ -248,6 +248,7 @@ fun UsernameTextField(
 fun PasswordTextField(
     label : String,
     password: String,
+    action : ImeAction,
     onPasswordChange: (String) -> Unit) {
     OutlinedTextField(
         value = password,
@@ -256,7 +257,7 @@ fun PasswordTextField(
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
+            imeAction = action
         ),
         singleLine = true,
         modifier = Modifier.fillMaxWidth(0.75f)
@@ -576,4 +577,9 @@ fun CurrentUserText(username : String) {
         fontSize = 18.sp,
         color = Color.Gray/*TODO*/
     )
+}
+
+@Composable
+fun ErrorMessage(text : String) {
+    Text(text = text, color = Color.Red)
 }

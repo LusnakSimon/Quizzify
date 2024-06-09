@@ -1,10 +1,14 @@
 package com.uniza.quizzify.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.uniza.quizzify.data.AppDatabase
+import com.uniza.quizzify.data.CategoryRepository
+import com.uniza.quizzify.data.UserRepository
 import com.uniza.quizzify.ui.screens.CategoryScreen
 import com.uniza.quizzify.ui.screens.ChangePasswordScreen
 import com.uniza.quizzify.ui.screens.ChangeUsernameScreen
@@ -20,16 +24,26 @@ import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ChangePasswordViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ChangeUsernameViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.LeaderboardViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.MainMenuViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.SettingsViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.ViewModelFactory
 
 @Composable
 fun NavigationGraph(startDestination: String = "initial") {
 
     val navController = rememberNavController()
+
+    val database = AppDatabase.getDatabase(context = LocalContext.current)
+
+    val userRepository = UserRepository(database.userDao())
+    val categoryRepository = CategoryRepository(database.categoryDao())
+
+    val userViewModelFactory = ViewModelFactory { UserViewModel(userRepository) }
+    val userViewModel: UserViewModel = viewModel(factory = userViewModelFactory)
 
     NavHost(navController = navController, startDestination = startDestination) {
 
@@ -38,16 +52,20 @@ fun NavigationGraph(startDestination: String = "initial") {
         composable("signIn") {
             val signInViewModelFactory = ViewModelFactory { SignInViewModel() }
             val signInViewModel: SignInViewModel = viewModel(factory = signInViewModelFactory)
-            SignInScreen(navController, signInViewModel)
+            SignInScreen(navController, signInViewModel, userViewModel)
         }
 
         composable("register") {
             val registerViewModelFactory = ViewModelFactory { RegisterViewModel() }
             val registerViewModel : RegisterViewModel = viewModel(factory = registerViewModelFactory)
-            RegisterScreen(navController, registerViewModel)
+            RegisterScreen(navController, registerViewModel, userViewModel)
         }
 
-        composable("mainMenu") { MainMenuScreen(navController) }
+        composable("mainMenu") {
+            val mainMenuModelFactory = ViewModelFactory { MainMenuViewModel() }
+            val mainMenuViewModel : MainMenuViewModel = viewModel(factory = mainMenuModelFactory)
+            MainMenuScreen(navController, mainMenuViewModel, userViewModel)
+        }
 
         composable("settings") {
             val settingsViewModelFactory = ViewModelFactory { SettingsViewModel() }

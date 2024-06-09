@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -40,18 +41,21 @@ fun ChangePasswordScreen(navController: NavController, changePasswordViewModel: 
         PasswordTextField(
             label = stringResource(id = R.string.Password),
             password = password,
+            action = ImeAction.Next,
             onPasswordChange = {changePasswordViewModel.setPassword(it)}
         )
 
         PasswordTextField(
             label = stringResource(id = R.string.NewPassword),
             password = newPassword,
+            action = ImeAction.Next,
             onPasswordChange = {changePasswordViewModel.setNewPassword(it)}
         )
 
         PasswordTextField(
             label = stringResource(id = R.string.ConfirmNewPassword),
             password = confirmNewPassword,
+            action = ImeAction.Done,
             onPasswordChange = {changePasswordViewModel.setConfirmNewPassword(it)}
         )
 

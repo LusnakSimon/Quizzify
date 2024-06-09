@@ -17,5 +17,9 @@ class UserRepository(private val userDao: UserDao) {
         userDao.updateUserSettings(userId, darkMode, notifications)
     }
 
+    suspend fun getUserByUsername(username: String): User? {
+        return userDao.getUserByUsername(username)
+    }
+
     suspend fun updateRating(userId: Int, increment: Int) = userDao.updateRating(userId, increment)
 }
