@@ -60,14 +60,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.data.User
+import com.uniza.quizzify.ui.theme.Black
 import com.uniza.quizzify.ui.theme.DarkBlue
 import com.uniza.quizzify.ui.theme.QuizzifyTheme
+import com.uniza.quizzify.ui.theme.White
 
 @Composable
-fun CustomTopBar(navController : NavController, navigateTo : String, title : String, titleSize: TextUnit = 35.sp) {
+fun CustomTopBar(
+    spacing : Dp = 10.dp,
+    navController : NavController,
+    navigateTo : String, title : String,
+    titleSize: TextUnit = 35.sp
+) {
     Row(
         modifier = Modifier
-            .border(1.dp, Color.Black, RectangleShape)
+            .border(1.dp, Black, RectangleShape)
             .height(75.dp)
             .fillMaxSize()
             .background(DarkBlue),
@@ -79,15 +86,16 @@ fun CustomTopBar(navController : NavController, navigateTo : String, title : Str
             Icon(modifier = Modifier.size(50.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R.string.Back),
-                tint = colorResource(id = R.color.white)
+                tint = White
             )
         }
         Box(modifier = Modifier.fillMaxWidth(0.9f),
             contentAlignment = Alignment.Center) {
-            Text(text = title, fontSize = titleSize, color = Color.White)
+            Text(text = title, fontSize = titleSize, color = White)
         }
 
     }
+    Spacer(modifier = Modifier.height(spacing))
 }
 
 @Composable
@@ -111,14 +119,14 @@ fun BlueButton(text : String, onClick : () -> Unit) {
 }
 
 @Composable
-fun AppLogo() {
+fun AppLogo(size : Dp = 350.dp) {
 
     Spacer(modifier = Modifier.height(20.dp))
 
     Image(
         painter = painterResource(id = R.drawable.app_logo_text),
         contentDescription = stringResource(id = R.string.AppLogo),
-        modifier = Modifier.size(360.dp)
+        modifier = Modifier.size(size)
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -192,14 +200,14 @@ fun SignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
 }
 
 @Composable
-fun ScrollableColumn(content: @Composable ColumnScope.() -> Unit) {
+fun ScrollableColumn(arrangement : Arrangement.Vertical = Arrangement.Top, content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = arrangement,
         content = content
     )
 }
@@ -340,14 +348,14 @@ fun AnswerButtons(
 }
 
 @Composable
-fun ProfileImage(painter : Painter) {
+fun ProfileImage() {
 
     Spacer(modifier = Modifier.height(20.dp))
 
     Image(
-        painter = painter,
+        painter = painterResource(id = R.drawable.default_profile_picture),
         contentDescription = stringResource(id = R.string.ProfilePicture),
-        modifier = Modifier.fillMaxSize(0.75f)
+        modifier = Modifier.border(1.dp, Black, RectangleShape)
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -572,7 +580,7 @@ fun CategoryProgress(questionNumber : Int, questionsTotal : Int) {
 
 @Composable
 fun CurrentUserText(username : String) {
-    Text(modifier = Modifier.padding(10.dp),
+    Text(modifier = Modifier.padding(5.dp),
         text = "${stringResource(id = R.string.SignedInAs)} $username",
         fontSize = 18.sp,
         color = Color.Gray/*TODO*/

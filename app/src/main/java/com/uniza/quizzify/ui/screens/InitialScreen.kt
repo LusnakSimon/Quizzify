@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -13,7 +14,7 @@ fun InitialScreen(navController: NavController) {
 
     BackHandler { }
 
-    ScrollableColumn {
+    ScrollableColumn(arrangement = Arrangement.Center) {
 
         AppLogo()
 

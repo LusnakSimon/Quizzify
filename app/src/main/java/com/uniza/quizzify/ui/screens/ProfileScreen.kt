@@ -29,7 +29,7 @@ fun ProfileScreen(navController: NavController, userViewModel: UserViewModel) {
             id = R.string.Profile
         ))
 
-        ProfileImage(painter = painterResource(id = android.R.drawable.ic_menu_camera)/*TODO*/)
+        ProfileImage()
 
         user?.let { UserProfileInfo(username = it.username, rating = it.rating) }
 

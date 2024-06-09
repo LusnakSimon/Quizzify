@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
@@ -43,7 +44,7 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
             id = R.string.Register
         ))
 
-        AppLogo()
+        AppLogo(size = 330.dp)
 
         if (showErrorText) {
             ErrorMessage(text = errorMessage)

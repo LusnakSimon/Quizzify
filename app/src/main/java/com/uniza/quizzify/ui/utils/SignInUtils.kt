@@ -22,7 +22,7 @@ object SignInUtils {
                 }
             }
         } else {
-            signInViewModel.setErrorMessage("Please fill all the fields")
+            signInViewModel.setErrorMessage("Please fill out all fields")
             signInViewModel.setShowErrorText(true)
         }
 

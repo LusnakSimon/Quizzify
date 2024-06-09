@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.utils.CardItem
 import com.uniza.quizzify.ui.utils.CustomTopBar
@@ -45,7 +46,12 @@ fun CategoryScreen(navController: NavController, categoryViewModel: CategoryView
 
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "mainMenu", title = stringResource(id = R.string.Categories))
+        CustomTopBar(
+            spacing = 0.dp,
+            navController = navController,
+            navigateTo = "mainMenu",
+            title = stringResource(id = R.string.Categories)
+        )
 
         ScrollableCategoryColumn(
             items = categories,

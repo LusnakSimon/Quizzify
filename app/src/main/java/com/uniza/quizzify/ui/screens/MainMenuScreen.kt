@@ -1,10 +1,12 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.MainMenuViewModel
@@ -42,9 +44,9 @@ fun MainMenuScreen(navController: NavController, mainMenuViewModel: MainMenuView
         mainMenuViewModel.toggleShowDialog()
     }
 
-    ScrollableColumn {
+    ScrollableColumn(arrangement = Arrangement.Center) {
 
-        AppLogo()
+        AppLogo(size = 370.dp)
 
         BlueButtonColumn(
             navController = navController,
