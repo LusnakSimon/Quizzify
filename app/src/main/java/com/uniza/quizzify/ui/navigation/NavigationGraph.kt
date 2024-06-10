@@ -47,7 +47,7 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
 
     NavHost(navController = navController, startDestination = startDestination) {
 
-        composable("initial") { InitialScreen(navController) }
+        composable("initial") { InitialScreen(navController, themeViewModel) }
 
         composable("signIn") {
             val signInViewModelFactory = ViewModelFactory { SignInViewModel() }
@@ -58,7 +58,7 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
         composable("register") {
             val registerViewModelFactory = ViewModelFactory { RegisterViewModel() }
             val registerViewModel : RegisterViewModel = viewModel(factory = registerViewModelFactory)
-            RegisterScreen(navController, registerViewModel, userViewModel)
+            RegisterScreen(navController, registerViewModel, userViewModel, themeViewModel)
         }
 
         composable("mainMenu") {

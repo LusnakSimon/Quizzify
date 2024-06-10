@@ -40,7 +40,7 @@ fun SettingsScreen(
         user?.darkMode?.let {
             SettingRow(
                 settingName = stringResource(id = R.string.DarkTheme),
-                isChecked = it
+                isChecked = themeViewModel.isDarkTheme.value
             ) {
                 coroutineScope.launch {
                     userViewModel.updateUserSettings(it, user!!.notifications)

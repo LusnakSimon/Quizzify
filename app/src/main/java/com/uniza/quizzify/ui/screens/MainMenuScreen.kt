@@ -29,10 +29,15 @@ fun MainMenuScreen(
     themeViewModel: ThemeViewModel
 ) {
 
+
     val coroutineScope = rememberCoroutineScope()
 
     val showDialog by mainMenuViewModel.showDialog
+
     val user by userViewModel.user
+    user?.let { themeViewModel.setDarkTheme(it.darkMode) }
+
+    val isSystemDarkTheme = isSystemInDarkTheme()
 
     if (showDialog) {
         SignOutDialog(
@@ -42,7 +47,7 @@ fun MainMenuScreen(
                     userViewModel.signOut()
                     mainMenuViewModel.toggleShowDialog()
                     navController.navigate("initial")
-                    themeViewModel.setDarkTheme(false)
+                    themeViewModel.setDarkTheme(isSystemDarkTheme)
                 }
             }
         )
@@ -54,7 +59,7 @@ fun MainMenuScreen(
 
     ScrollableColumn(arrangement = Arrangement.Center) {
 
-        AppLogo(size = 370.dp)
+        AppLogo(size = 370.dp, isDarkTheme = themeViewModel.isDarkTheme)
 
         BlueButtonColumn(
             navController = navController,

@@ -4,8 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class ThemeViewModel : ViewModel() {
-    var isDarkTheme : MutableState<Boolean> = mutableStateOf(false)
+class ThemeViewModel(isSystemDarkTheme : Boolean) : ViewModel() {
+    var isDarkTheme : MutableState<Boolean> = mutableStateOf(isSystemDarkTheme)
         private set
 
     fun setDarkTheme(darkTheme : Boolean) {

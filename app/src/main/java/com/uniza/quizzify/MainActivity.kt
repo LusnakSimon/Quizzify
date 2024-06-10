@@ -3,6 +3,7 @@ package com.uniza.quizzify
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.uniza.quizzify.ui.navigation.NavigationGraph
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val themeViewModelFactory = ViewModelFactory { ThemeViewModel() }
+            val isSystemDarkTheme = isSystemInDarkTheme()
+            val themeViewModelFactory = ViewModelFactory { ThemeViewModel(isSystemDarkTheme) }
             val themeViewModel : ThemeViewModel = viewModel(factory = themeViewModelFactory)
             val isDarkTheme by themeViewModel.isDarkTheme
 

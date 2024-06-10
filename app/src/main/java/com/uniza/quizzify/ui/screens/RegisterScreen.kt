@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -10,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -22,7 +24,12 @@ import com.uniza.quizzify.ui.utils.UsernameTextField
 import kotlinx.coroutines.launch
 
 @Composable
-fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel, userViewModel: UserViewModel) {
+fun RegisterScreen(
+    navController: NavController,
+    registerViewModel: RegisterViewModel,
+    userViewModel: UserViewModel,
+    themeViewModel: ThemeViewModel
+) {
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -32,6 +39,9 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
     val username by registerViewModel.username
     val password by registerViewModel.password
     val confirmPassword by registerViewModel.confirmPassword
+
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    themeViewModel.setDarkTheme(isSystemInDarkTheme)
 
     BackHandler {
         navController.navigate("initial")
@@ -44,11 +54,9 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
             id = R.string.Register
         ))
 
-        AppLogo(size = 330.dp)
+        AppLogo(size = 330.dp, isDarkTheme = themeViewModel.isDarkTheme)
 
-        if (showErrorText) {
-            ErrorMessage(text = errorMessage)
-        }
+        ErrorMessage(text = errorMessage, showErrorText)
 
         UsernameTextField(
             label = stringResource(id = R.string.Username),

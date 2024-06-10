@@ -1,6 +1,7 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,6 +37,9 @@ fun SignInScreen(
     val username by signInViewModel.username
     val password by signInViewModel.password
 
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    themeViewModel.setDarkTheme(isSystemInDarkTheme)
+
     BackHandler {
         navController.navigate("initial")
     }
@@ -48,11 +52,9 @@ fun SignInScreen(
             title = stringResource(id = R.string.SignIn)
         )
 
-        AppLogo()
+        AppLogo(isDarkTheme = themeViewModel.isDarkTheme)
 
-        if(showErrorText) {
-            ErrorMessage(text = errorMessage)
-        }
+        ErrorMessage(text = errorMessage, showErrorText)
 
         UsernameTextField(
             label = stringResource(id = R.string.Username),

@@ -40,6 +40,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,9 +61,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.data.User
-import com.uniza.quizzify.ui.theme.Black
-import com.uniza.quizzify.ui.theme.DarkBlue
-import com.uniza.quizzify.ui.theme.White
 
 
 @Composable
@@ -74,10 +72,10 @@ fun CustomTopBar(
 ) {
     Row(
         modifier = Modifier
-            .border(1.dp, Black, RectangleShape)
+            .border(1.dp, Color.Black, RectangleShape)
             .height(75.dp)
             .fillMaxSize()
-            .background(DarkBlue),
+            .background(MaterialTheme.colorScheme.primary),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
 
@@ -86,12 +84,12 @@ fun CustomTopBar(
             Icon(modifier = Modifier.size(50.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R.string.Back),
-                tint = White
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
         Box(modifier = Modifier.fillMaxWidth(0.9f),
             contentAlignment = Alignment.Center) {
-            Text(text = title, fontSize = titleSize, color = White)
+            Text(text = title, fontSize = titleSize, color = MaterialTheme.colorScheme.onPrimary)
         }
 
     }
@@ -109,8 +107,8 @@ fun BlueButton(text : String, onClick : () -> Unit) {
             .border(1.dp, Color.Black, RoundedCornerShape(30.dp))
             .fillMaxWidth(0.75f)
             .height(60.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_blue),
-            contentColor = Color.White)
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary)
     ) {
         Text(text = text, fontSize = 18.sp)
     }
@@ -119,12 +117,12 @@ fun BlueButton(text : String, onClick : () -> Unit) {
 }
 
 @Composable
-fun AppLogo(size : Dp = 350.dp) {
+fun AppLogo(size: Dp = 350.dp, isDarkTheme: MutableState<Boolean>) {
 
     Spacer(modifier = Modifier.height(20.dp))
 
     Image(
-        painter = painterResource(id = R.drawable.app_logo_text),
+        painter = painterResource(id = if (isDarkTheme.value) R.drawable.app_logo_dark else R.drawable.app_logo_light),
         contentDescription = stringResource(id = R.string.AppLogo),
         modifier = Modifier.size(size)
     )
@@ -145,7 +143,7 @@ fun AnswerButton(
             .height(60.dp)
             .fillMaxWidth(0.85f),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.onPrimary,
             contentColor = Color.Black
         )
     ) {
@@ -172,7 +170,9 @@ fun ResetDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
             ) {
                 Text(stringResource(id = R.string.Cancel))
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background,
+        textContentColor = MaterialTheme.colorScheme.onBackground
     )
 }
 
@@ -195,7 +195,9 @@ fun SignOutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
             ) {
                 Text(stringResource(id = R.string.Cancel))
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background,
+        textContentColor = MaterialTheme.colorScheme.onBackground
     )
 }
 
@@ -224,7 +226,7 @@ fun SettingRow(settingName: String, isChecked: Boolean, onCheckedChange: (Boolea
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = settingName, fontSize = 25.sp)
+        Text(text = settingName, fontSize = 25.sp, color = MaterialTheme.colorScheme.onBackground)
 
         Switch(
             checked = isChecked,
@@ -285,14 +287,14 @@ fun BlueIconButton(width : Dp, height : Dp, description : String, icon : ImageVe
         .height(height)
         .width(width)
         .clip(RoundedCornerShape(12.dp))
-        .background(colorResource(id = R.color.dark_blue))
+        .background(MaterialTheme.colorScheme.primary)
         .clickable { onClick() },
         contentAlignment = Alignment.Center) {
         Icon(
             modifier = Modifier.size(50.dp),
             imageVector = icon,
             contentDescription = description,
-            tint = colorResource(id = R.color.white)
+            tint = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -300,7 +302,7 @@ fun BlueIconButton(width : Dp, height : Dp, description : String, icon : ImageVe
 @Composable
 fun QuestionText(text : String) {
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Text(text = text, fontSize = 25.sp)
+        Text(text = text, fontSize = 25.sp, color = MaterialTheme.colorScheme.onBackground)
     }
 }
 
@@ -358,7 +360,7 @@ fun ProfileImage() {
     Image(
         painter = painterResource(id = R.drawable.default_profile_picture),
         contentDescription = stringResource(id = R.string.ProfilePicture),
-        modifier = Modifier.border(1.dp, Black, RectangleShape)
+        modifier = Modifier.border(1.dp, Color.Black, RectangleShape)
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -405,9 +407,9 @@ fun BlueButtonColumn(
 @Composable
 fun UserProfileInfo(username : String, rating : Int) {
 
-    Text(text =username, fontSize = 30.sp)
+    Text(text =username, fontSize = 30.sp, color = MaterialTheme.colorScheme.onBackground)
 
-    Text(text ="${stringResource(id = R.string.YourRating)} $rating")
+    Text(text ="${stringResource(id = R.string.YourRating)} $rating", color = MaterialTheme.colorScheme.onBackground)
 }
 
 @Composable
@@ -416,21 +418,21 @@ fun LeaderboardHeader() {
     Text(text = stringResource(id = R.string.Top100), fontSize = 30.sp, modifier = Modifier
         .border(1.dp, Color.Black, RoundedCornerShape(5.dp))
         .clip(RoundedCornerShape(5.dp))
-        .background(DarkBlue),
-        color = Color.White)
+        .background(MaterialTheme.colorScheme.primary),
+        color = MaterialTheme.colorScheme.onPrimary)
     Row(
         modifier = Modifier
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .background(DarkBlue)
+            .background(MaterialTheme.colorScheme.primary)
             .fillMaxWidth(0.8f)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = stringResource(id = R.string.Rank), color = Color.White)
-        Text(text = stringResource(id = R.string.Username), color = Color.White)
-        Text(text = stringResource(id = R.string.Rating), color = Color.White)
+        Text(text = stringResource(id = R.string.Rank), color = MaterialTheme.colorScheme.onPrimary)
+        Text(text = stringResource(id = R.string.Username), color = MaterialTheme.colorScheme.onPrimary)
+        Text(text = stringResource(id = R.string.Rating), color = MaterialTheme.colorScheme.onPrimary)
     }
 }
 
@@ -461,17 +463,17 @@ fun Leaderboard(users : List<User>, user: User) {
         modifier = Modifier
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFFBBCBBB)/*TODO*/)
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth(0.8f)
             .height(500.dp)
             .padding(1.dp)
 
     ) {
         items(users) { user ->
-            LeaderboardRow(rank = 1/*TODO*/,username = user.username, rating = user.rating, color = Color.LightGray/*TODO*/, 1f)
+            LeaderboardRow(rank = 1/*TODO*/,username = user.username, rating = user.rating, color = MaterialTheme.colorScheme.primaryContainer, 1f)
         }
     }
-    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} ${stringResource(id = R.string.You)}", rating = user.rating, color = Color.Green, 0.8f)
+    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} ${stringResource(id = R.string.You)}", rating = user.rating, color = MaterialTheme.colorScheme.onTertiary, 0.8f)
     Spacer(modifier = Modifier.height(10.dp))
 }
 
@@ -498,13 +500,13 @@ fun CategoryCard(item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) 
             .border(1.dp, Color.DarkGray/*TODO*/, RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(Color.LightGray/*TODO*/)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .clickable { onClick() }
             .padding(6.dp)
     ) {
         Column(
             modifier = Modifier
-                .background(Color.LightGray/*TODO*/)
+                .background(MaterialTheme.colorScheme.primaryContainer)
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -577,7 +579,8 @@ fun CategoryProgress(questionNumber : Int, questionsTotal : Int) {
     
     Text(
         text = "$questionNumber/$questionsTotal",
-        fontSize = 20.sp
+        fontSize = 20.sp,
+        color = MaterialTheme.colorScheme.onBackground
     )
 }
 
@@ -591,6 +594,13 @@ fun CurrentUserText(username : String) {
 }
 
 @Composable
-fun ErrorMessage(text : String) {
-    Text(text = text, color = Color.Red)
+fun ErrorMessage(text : String, showErrorMessage : Boolean) {
+    if (showErrorMessage) {
+        Box(modifier = Modifier.height(25.dp)) {
+            Text(text = text, color = Color.Red)
+        }
+    } else {
+        Spacer(modifier = Modifier.height(25.dp))
+    }
+
 }

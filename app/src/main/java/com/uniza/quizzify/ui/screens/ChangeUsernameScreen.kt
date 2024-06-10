@@ -49,9 +49,7 @@ fun ChangeUsernameScreen(
             titleSize = 30.sp
         )
 
-        if (showErrorText) {
-            ErrorMessage(text = errorMessage)
-        }
+        ErrorMessage(text = errorMessage, showErrorText)
 
         UsernameTextField(
             label = stringResource(id = R.string.NewUsername),

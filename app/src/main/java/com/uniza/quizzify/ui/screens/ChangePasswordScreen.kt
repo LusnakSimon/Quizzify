@@ -49,9 +49,7 @@ fun ChangePasswordScreen(
             titleSize = 30.sp
         )
 
-        if (showErrorText) {
-            ErrorMessage(text = errorMessage)
-        }
+        ErrorMessage(text = errorMessage, showErrorText)
 
         PasswordTextField(
             label = stringResource(id = R.string.Password),

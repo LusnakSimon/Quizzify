@@ -10,24 +10,36 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
+    primary = DarkBlue,
+    secondary = DarkBlue,
+    tertiary = Gray,
     background = Black,
+    surface = Gray,
+    onPrimary = Gray,
+    onBackground = Gray,
+    primaryContainer = Gray,
+    onTertiary = DarkGreen
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-
+    primary = Blue,
+    secondary = Blue,
+    tertiary = White,
     background = White,
+    surface = Black,
+    onPrimary = White,
+    onBackground = Color.Black,
+    primaryContainer = LightGray,
+    onTertiary = Green
+
+
     /* Other default colors to override
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -42,7 +54,7 @@ private val LightColorScheme = lightColorScheme(
 fun QuizzifyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
