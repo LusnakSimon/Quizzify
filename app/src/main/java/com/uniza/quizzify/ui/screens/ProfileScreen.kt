@@ -18,16 +18,20 @@ import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 fun ProfileScreen(navController: NavController, userViewModel: UserViewModel) {
 
     val user by userViewModel.user
+    val previousBackStackEntry = navController.previousBackStackEntry
+    val from = previousBackStackEntry?.destination?.route
 
     BackHandler {
-        navController.navigate("mainMenu")
+        from?.let { navController.navigate(it) }
     }
 
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "mainMenu", title = stringResource(
-            id = R.string.Profile
-        ))
+        from?.let {
+            CustomTopBar(navController = navController, navigateTo = it, title = stringResource(
+                id = R.string.Profile
+            ))
+        }
 
         ProfileImage()
 

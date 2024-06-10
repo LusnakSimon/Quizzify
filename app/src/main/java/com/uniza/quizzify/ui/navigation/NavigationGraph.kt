@@ -20,6 +20,7 @@ import com.uniza.quizzify.ui.screens.QuestionScreen
 import com.uniza.quizzify.ui.screens.RegisterScreen
 import com.uniza.quizzify.ui.screens.SettingsScreen
 import com.uniza.quizzify.ui.screens.SignInScreen
+import com.uniza.quizzify.ui.screens.UserDetailsScreen
 import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ChangePasswordViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ChangeUsernameViewModel
@@ -72,9 +73,9 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
         }
 
         composable("leaderboard") {
-            val leaderboardViewModelFactory = ViewModelFactory { LeaderboardViewModel() }
+            val leaderboardViewModelFactory = ViewModelFactory { LeaderboardViewModel(userRepository) }
             val leaderboardViewModel : LeaderboardViewModel = viewModel(factory = leaderboardViewModelFactory)
-            LeaderboardScreen(navController, leaderboardViewModel)
+            LeaderboardScreen(navController, leaderboardViewModel, userViewModel)
         }
 
         composable("profile") { ProfileScreen(navController, userViewModel) }
@@ -101,6 +102,10 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
             val questionViewModelFactory = ViewModelFactory { QuestionViewModel() }
             val questionViewModel : QuestionViewModel = viewModel(factory = questionViewModelFactory)
             QuestionScreen(navController, questionViewModel)
+        }
+
+        composable("details") {
+            UserDetailsScreen(navController = navController, userViewModel = userViewModel)
         }
     }
 }

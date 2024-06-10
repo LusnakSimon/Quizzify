@@ -33,7 +33,7 @@
     <string name="SignOut">Sign out</string>
     <string name="SignOutDialogQuestion">Are you sure you want to sign out?</string>
     <string name="ProfilePicture">Profile picture</string>
-    <string name="YourRating">Your rating is: </string>
+    <string name="YourRating">Rating: </string>
     <string name="Username">Username</string>
     <string name="Rating">Rating</string>
     <string name="You"> (You)</string>

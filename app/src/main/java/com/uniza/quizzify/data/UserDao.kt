@@ -34,4 +34,5 @@ interface UserDao {
 
     @Query("UPDATE users SET rating = rating + :increment WHERE userId = :userId")
     suspend fun updateRating(userId: Int, increment: Int)
+
 }

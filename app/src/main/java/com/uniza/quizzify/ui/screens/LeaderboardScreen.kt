@@ -2,6 +2,9 @@ package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.uniza.quizzify.data.User
@@ -10,16 +13,25 @@ import com.uniza.quizzify.ui.utils.Leaderboard
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.LeaderboardViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun LeaderboardScreen(navController: NavController, leaderboardViewModel: LeaderboardViewModel) {
+fun LeaderboardScreen(
+    navController: NavController,
+    leaderboardViewModel: LeaderboardViewModel,
+    userViewModel: UserViewModel
+) {
+
+    val topUsers by leaderboardViewModel.topUsers.observeAsState(emptyList())
+    val currentUser by userViewModel.user
+
+    val coroutineScope = rememberCoroutineScope()
+
 
     BackHandler {
         navController.navigate("mainMenu")
     }
-
-    val users = List(100) { User(userId = 0, username = "Username", password = "123", rating = 0) }
-    val user = User(userId = 0, username = "Username", password = "123", rating = 0)
 
     ScrollableColumn {
 
@@ -27,7 +39,18 @@ fun LeaderboardScreen(navController: NavController, leaderboardViewModel: Leader
             id = R.string.Leaderboard
         ))
 
-        Leaderboard(users = users, user = user)
+        currentUser?.let { Leaderboard(users = topUsers, currentUser = it) {
+            coroutineScope.launch {
+                if (it == currentUser!!.username) {
+                    navController.navigate("profile")
+                } else {
+                    userViewModel.getOtherUser(it) {
+
+                        navController.navigate("details")
+                    }
+                }
+            }
+        } }
 
     }
 }

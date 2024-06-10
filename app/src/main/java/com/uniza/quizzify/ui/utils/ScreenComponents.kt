@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -437,10 +438,10 @@ fun LeaderboardHeader() {
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colorScheme.primary)
-            .fillMaxWidth(0.8f)
+            .fillMaxWidth(0.9f)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         Text(text = stringResource(id = R.string.Rank), color = MaterialTheme.colorScheme.onPrimary)
         Text(text = stringResource(id = R.string.Username), color = MaterialTheme.colorScheme.onPrimary)
@@ -449,25 +450,35 @@ fun LeaderboardHeader() {
 }
 
 @Composable
-fun LeaderboardRow(rank : Int, username: String, rating : Int, color : Color, width : Float) {
+fun LeaderboardRow(rank : Int,
+                   username: String,
+                   rating : Int,
+                   color : Color,
+                   width : Float,
+                   onClick : (username: String) -> Unit
+                   ) {
     Row(
         modifier = Modifier
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .fillMaxWidth(width)
             .background(color)
+            .clickable { onClick(username) }
             .padding(20.dp),
+
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
-        Text(text = "$rank")
+        Text(text = "$rank.")
         Text(text = username)
         Text(text = "$rating")
     }
 }
 
 @Composable
-fun Leaderboard(users : List<User>, user: User) {
+fun Leaderboard(users : List<User>,
+                currentUser: User,
+                onUserClick : (username : String) -> Unit) {
 
     LeaderboardHeader()
 
@@ -476,16 +487,24 @@ fun Leaderboard(users : List<User>, user: User) {
             .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colorScheme.background)
-            .fillMaxWidth(0.8f)
-            .height(500.dp)
+            .fillMaxWidth(0.9f)
+            .height(580.dp)
             .padding(1.dp)
 
     ) {
-        items(users) { user ->
-            LeaderboardRow(rank = 1/*TODO*/,username = user.username, rating = user.rating, color = MaterialTheme.colorScheme.primaryContainer, 1f)
+        itemsIndexed(users) { index, user ->
+            LeaderboardRow(
+                rank = index + 1,
+                username = user.username,
+                rating = user.rating,
+                color = if (user.userId != currentUser.userId) {
+                    MaterialTheme.colorScheme.primaryContainer
+                } else MaterialTheme.colorScheme.onTertiary,
+                width = 1f,
+                onClick = onUserClick
+            )
         }
     }
-    LeaderboardRow(rank = 1/*TODO*/, username = "${user.username} ${stringResource(id = R.string.You)}", rating = user.rating, color = MaterialTheme.colorScheme.onTertiary, 0.8f)
     Spacer(modifier = Modifier.height(10.dp))
 }
 
