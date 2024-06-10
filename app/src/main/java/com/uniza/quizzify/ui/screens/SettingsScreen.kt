@@ -43,7 +43,7 @@ fun SettingsScreen(
                 isChecked = themeViewModel.isDarkTheme.value
             ) {
                 coroutineScope.launch {
-                    userViewModel.updateUserSettings(it, user!!.notifications)
+                    userViewModel.updateUserDarkTheme(it)
                     userViewModel.authenticateUser(user!!.username, user!!.password) {}
                     themeViewModel.setDarkTheme(it)
                 }
@@ -56,7 +56,7 @@ fun SettingsScreen(
                 isChecked = it
             ) {
                 coroutineScope.launch {
-                    userViewModel.updateUserSettings(user!!.darkMode, it)
+                    userViewModel.updateUserNotifications(it)
                     userViewModel.authenticateUser(user!!.username, user!!.password) {}
                 }
             }

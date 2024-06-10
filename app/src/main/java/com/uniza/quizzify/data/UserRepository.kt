@@ -13,8 +13,12 @@ class UserRepository(private val userDao: UserDao) {
 
     suspend fun updatePassword(userId: Int, newPassword: String) = userDao.updatePassword(userId, newPassword)
 
-    suspend fun updateUserSettings(userId: Int, darkMode: Boolean, notifications: Boolean) {
-        userDao.updateUserSettings(userId, darkMode, notifications)
+    suspend fun updateUserDarkTheme(userId: Int, darkMode: Boolean) {
+        userDao.updateUserDarkTheme(userId, darkMode)
+    }
+
+    suspend fun updateUserNotifications(userId: Int, notifications: Boolean) {
+        userDao.updateUserNotifications(userId, notifications)
     }
 
     suspend fun getUserByUsername(username: String): User? {

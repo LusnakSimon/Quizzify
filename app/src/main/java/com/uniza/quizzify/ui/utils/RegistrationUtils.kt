@@ -1,7 +1,9 @@
 package com.uniza.quizzify.ui.utils
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 
 object RegistrationUtils {
@@ -11,7 +13,8 @@ object RegistrationUtils {
         confirmPassword: String,
         userViewModel: UserViewModel,
         registerViewModel: RegisterViewModel,
-        navController: NavController
+        navController: NavController,
+        themeViewModel: ThemeViewModel
     ) {
         val errorMessage = when {
             username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() -> "Please fill out all fields."
@@ -20,7 +23,7 @@ object RegistrationUtils {
             password != confirmPassword -> "Passwords do not match."
             userViewModel.isUsernameTaken(username) -> "Username is already taken."
             else -> {
-                userViewModel.registerUser(username = username, password = password) { registerSuccess ->
+                userViewModel.registerUser(username = username, password = password, darkMode = themeViewModel.isDarkTheme.value) { registerSuccess ->
                     if (registerSuccess) {
                         userViewModel.authenticateUser(username = username, password = password) { authSuccess ->
                             if (authSuccess) {

@@ -50,9 +50,11 @@ fun RegisterScreen(
 
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "initial", title = stringResource(
-            id = R.string.Register
-        ))
+        CustomTopBar(
+            navController = navController,
+            navigateTo = "initial",
+            title = stringResource(id = R.string.Register)
+        )
 
         AppLogo(size = 330.dp, isDarkTheme = themeViewModel.isDarkTheme)
 
@@ -88,7 +90,8 @@ fun RegisterScreen(
                         confirmPassword = confirmPassword,
                         userViewModel = userViewModel,
                         registerViewModel = registerViewModel,
-                        navController = navController
+                        navController = navController,
+                        themeViewModel = themeViewModel
                     )
                 }
             }

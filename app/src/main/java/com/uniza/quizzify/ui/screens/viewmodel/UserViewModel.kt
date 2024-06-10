@@ -17,12 +17,6 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
     var user: MutableState<User?> = mutableStateOf(null)
         private set
 
-    var isDarkTheme = user.value?.darkMode
-        private set
-
-    var notifications = user.value?.notifications
-        private set
-
     fun authenticateUser(username: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val authenticatedUser = userRepository.authenticateUser(username, password)
@@ -33,9 +27,9 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
         }
     }
 
-    fun registerUser(username: String, password: String, onResult: (Boolean) -> Unit) {
+    fun registerUser(username: String, password: String, darkMode : Boolean, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val result = userRepository.registerUser(User(username = username, password = password))
+            val result = userRepository.registerUser(User(username = username, password = password, darkMode = darkMode))
             withContext(Dispatchers.Main) {
                 onResult(result > 0)
             }
@@ -54,10 +48,13 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
         userRepository.updatePassword(userId, newPassword)
     }
 
-    suspend fun updateUserSettings(darkTheme : Boolean, notifications : Boolean) {
-        user.value?.let { userRepository.updateUserSettings(it.userId, darkTheme, notifications) }
+    suspend fun updateUserDarkTheme(darkTheme: Boolean) {
+        user.value?.let { userRepository.updateUserDarkTheme(userId = it.userId,darkTheme) }
     }
 
+    suspend fun updateUserNotifications(notifications: Boolean) {
+        user.value?.let { userRepository.updateUserNotifications(userId = it.userId, notifications) }
+    }
 
     fun signOut() {
         user.value = null

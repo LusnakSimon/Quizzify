@@ -26,8 +26,11 @@ interface UserDao {
     @Query("UPDATE users SET password = :newPassword WHERE userId = :userId")
     suspend fun updatePassword(userId: Int, newPassword: String)
 
-    @Query("UPDATE users SET darkMode = :darkMode, notifications = :notifications WHERE userId = :userId")
-    suspend fun updateUserSettings(userId: Int, darkMode: Boolean, notifications: Boolean)
+    @Query("UPDATE users SET darkMode = :darkMode WHERE userId = :userId")
+    suspend fun updateUserDarkTheme(userId : Int, darkMode : Boolean)
+
+    @Query("UPDATE users SET notifications = :notifications WHERE userId = :userId")
+    suspend fun updateUserNotifications(userId : Int, notifications : Boolean)
 
     @Query("UPDATE users SET rating = rating + :increment WHERE userId = :userId")
     suspend fun updateRating(userId: Int, increment: Int)
