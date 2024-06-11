@@ -1,0 +1,26 @@
+[
+  {
+    "categoryId": 1,
+    "categoryName": "Science",
+    "description": "Questions related to various scientific topics.",
+    "imageId": 1
+  },
+  {
+    "categoryId": 2,
+    "categoryName": "History",
+    "description": "Questions related to historical events and figures.",
+    "imageId": 2
+  },
+  {
+    "categoryId": 3,
+    "categoryName": "Geography",
+    "description": "Questions about the world's geography.",
+    "imageId": 3
+  },
+  {
+    "categoryId": 4,
+    "categoryName": "Literature",
+    "description": "Questions about literary works and authors.",
+    "imageId": 4
+  }
+]

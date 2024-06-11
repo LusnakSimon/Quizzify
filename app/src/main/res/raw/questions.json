@@ -1,0 +1,50 @@
+[
+  {
+    "questionId": 1,
+    "categoryId": 1,
+    "questionText": "What is the chemical symbol for water?",
+    "imageId": 1
+  },
+  {
+    "questionId": 2,
+    "categoryId": 1,
+    "questionText": "What planet is known as the Red Planet?",
+    "imageId": 2
+  },
+  {
+    "questionId": 3,
+    "categoryId": 2,
+    "questionText": "Who was the first President of the United States?",
+    "imageId": 3
+  },
+  {
+    "questionId": 4,
+    "categoryId": 2,
+    "questionText": "In which year did World War II end?",
+    "imageId": 4
+  },
+  {
+    "questionId": 5,
+    "categoryId": 3,
+    "questionText": "What is the capital of France?",
+    "imageId": 5
+  },
+  {
+    "questionId": 6,
+    "categoryId": 3,
+    "questionText": "Which is the largest continent by area?",
+    "imageId": 6
+  },
+  {
+    "questionId": 7,
+    "categoryId": 4,
+    "questionText": "Who wrote 'To Kill a Mockingbird'?",
+    "imageId": 7
+  },
+  {
+    "questionId": 8,
+    "categoryId": 4,
+    "questionText": "What is the name of the fictional detective created by Arthur Conan Doyle?",
+    "imageId": 8
+  }
+]

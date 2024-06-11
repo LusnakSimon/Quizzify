@@ -1,0 +1,194 @@
+[
+  {
+    "answerId": 1,
+    "questionId": 1,
+    "answerText": "H2O",
+    "isCorrect": true
+  },
+  {
+    "answerId": 2,
+    "questionId": 1,
+    "answerText": "O2",
+    "isCorrect": false
+  },
+  {
+    "answerId": 3,
+    "questionId": 1,
+    "answerText": "CO2",
+    "isCorrect": false
+  },
+  {
+    "answerId": 4,
+    "questionId": 1,
+    "answerText": "NaCl",
+    "isCorrect": false
+  },
+  {
+    "answerId": 5,
+    "questionId": 2,
+    "answerText": "Mars",
+    "isCorrect": true
+  },
+  {
+    "answerId": 6,
+    "questionId": 2,
+    "answerText": "Earth",
+    "isCorrect": false
+  },
+  {
+    "answerId": 7,
+    "questionId": 2,
+    "answerText": "Jupiter",
+    "isCorrect": false
+  },
+  {
+    "answerId": 8,
+    "questionId": 2,
+    "answerText": "Saturn",
+    "isCorrect": false
+  },
+  {
+    "answerId": 9,
+    "questionId": 3,
+    "answerText": "George Washington",
+    "isCorrect": true
+  },
+  {
+    "answerId": 10,
+    "questionId": 3,
+    "answerText": "Thomas Jefferson",
+    "isCorrect": false
+  },
+  {
+    "answerId": 11,
+    "questionId": 3,
+    "answerText": "Abraham Lincoln",
+    "isCorrect": false
+  },
+  {
+    "answerId": 12,
+    "questionId": 3,
+    "answerText": "John Adams",
+    "isCorrect": false
+  },
+  {
+    "answerId": 13,
+    "questionId": 4,
+    "answerText": "1945",
+    "isCorrect": true
+  },
+  {
+    "answerId": 14,
+    "questionId": 4,
+    "answerText": "1939",
+    "isCorrect": false
+  },
+  {
+    "answerId": 15,
+    "questionId": 4,
+    "answerText": "1941",
+    "isCorrect": false
+  },
+  {
+    "answerId": 16,
+    "questionId": 4,
+    "answerText": "1943",
+    "isCorrect": false
+  },
+  {
+    "answerId": 17,
+    "questionId": 5,
+    "answerText": "Paris",
+    "isCorrect": true
+  },
+  {
+    "answerId": 18,
+    "questionId": 5,
+    "answerText": "Berlin",
+    "isCorrect": false
+  },
+  {
+    "answerId": 19,
+    "questionId": 5,
+    "answerText": "Madrid",
+    "isCorrect": false
+  },
+  {
+    "answerId": 20,
+    "questionId": 5,
+    "answerText": "Rome",
+    "isCorrect": false
+  },
+  {
+    "answerId": 21,
+    "questionId": 6,
+    "answerText": "Asia",
+    "isCorrect": true
+  },
+  {
+    "answerId": 22,
+    "questionId": 6,
+    "answerText": "Africa",
+    "isCorrect": false
+  },
+  {
+    "answerId": 23,
+    "questionId": 6,
+    "answerText": "North America",
+    "isCorrect": false
+  },
+  {
+    "answerId": 24,
+    "questionId": 6,
+    "answerText": "Europe",
+    "isCorrect": false
+  },
+  {
+    "answerId": 25,
+    "questionId": 7,
+    "answerText": "Harper Lee",
+    "isCorrect": true
+  },
+  {
+    "answerId": 26,
+    "questionId": 7,
+    "answerText": "J.K. Rowling",
+    "isCorrect": false
+  },
+  {
+    "answerId": 27,
+    "questionId": 7,
+    "answerText": "Jane Austen",
+    "isCorrect": false
+  },
+  {
+    "answerId": 28,
+    "questionId": 7,
+    "answerText": "Mark Twain",
+    "isCorrect": false
+  },
+  {
+    "answerId": 29,
+    "questionId": 8,
+    "answerText": "Sherlock Holmes",
+    "isCorrect": true
+  },
+  {
+    "answerId": 30,
+    "questionId": 8,
+    "answerText": "Hercule Poirot",
+    "isCorrect": false
+  },
+  {
+    "answerId": 31,
+    "questionId": 8,
+    "answerText": "Miss Marple",
+    "isCorrect": false
+  },
+  {
+    "answerId": 32,
+    "questionId": 8,
+    "answerText": "Philip Marlowe",
+    "isCorrect": false
+  }
+]
