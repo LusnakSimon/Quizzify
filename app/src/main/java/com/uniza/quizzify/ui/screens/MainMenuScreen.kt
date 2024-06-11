@@ -71,7 +71,9 @@ fun MainMenuScreen(
 
         BlueIconButtonRow(
             onSignOutClick = { mainMenuViewModel.toggleShowDialog() },
-            onProfileClick = { navController.navigate("profile") },
+            onProfileClick = {
+                userViewModel.setLastVisitedScreen("mainMenu")
+                navController.navigate("profile") },
             onSettingsClick = { navController.navigate("settings") }
         )
 

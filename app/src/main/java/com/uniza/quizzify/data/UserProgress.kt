@@ -7,15 +7,16 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "user_progress",
-    indices = [Index(value = ["userId"]), Index(value = ["categoryId"])],
+    indices = [Index(value = ["userId"]), Index(value = ["questionId"])],
     foreignKeys = [
         ForeignKey(entity = User::class, parentColumns = ["userId"], childColumns = ["userId"], onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = Category::class, parentColumns = ["categoryId"], childColumns = ["categoryId"], onDelete = ForeignKey.CASCADE)
+        ForeignKey(entity = Question::class, parentColumns = ["questionId"], childColumns = ["questionId"], onDelete = ForeignKey.CASCADE)
     ]
 )
 data class UserProgress(
     @PrimaryKey(autoGenerate = true) val progressId: Int = 0,
     val userId: Int,
-    val categoryId: Int,
-    val progress: Int
+    val questionId: Int,
+    val isAnswered: Boolean = false
 )
+

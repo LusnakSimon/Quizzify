@@ -2,9 +2,12 @@ package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AnswerButtons
@@ -18,12 +21,25 @@ import com.uniza.quizzify.ui.utils.ScrollableColumn
 fun QuestionScreen(
     navController: NavController,
     categoryId : Int,
-    questionViewModel: QuestionViewModel,
     userProgressViewModel: UserProgressViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    categoryViewModel : CategoryViewModel
 ) {
 
+    val user by userViewModel.user
 
+    val categories by categoryViewModel.categories.observeAsState(emptyList())
+
+    LaunchedEffect(categories, user?.userId) {
+        user?.let { userProgressViewModel.fetchAllProgressData(it.userId, categories) }
+    }
+
+    val answeredQuestionsInCategoryCount by userProgressViewModel.answeredQuestionsInCategoryCount.observeAsState(emptyMap())
+    val totalQuestionsInCategoryCount by userProgressViewModel.totalQuestionsInCategoryCount.observeAsState(emptyMap())
+
+    val progress = answeredQuestionsInCategoryCount[categoryId] ?: 0
+    val questionsTotal = totalQuestionsInCategoryCount[categoryId] ?: 0
+    
     BackHandler {
         navController.navigate("categories")
     }
@@ -32,7 +48,7 @@ fun QuestionScreen(
 
         CustomTopBar(navController = navController, navigateTo = "categories", title = /*TODO*/"$categoryId")
 
-        CategoryProgress(questionNumber = 1/*TODO*/, questionsTotal = 10/*TODO*/)
+        CategoryProgress(questionNumber = progress, questionsTotal = questionsTotal)
 
         QuestionImage(painter = painterResource(id = android.R.drawable.ic_menu_camera/*TODO*/))
 

@@ -3,14 +3,8 @@ package com.uniza.quizzify.ui.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
-import com.uniza.quizzify.ui.utils.BlueButtonColumn
 import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.ProfileImage
 import com.uniza.quizzify.ui.utils.ScrollableColumn

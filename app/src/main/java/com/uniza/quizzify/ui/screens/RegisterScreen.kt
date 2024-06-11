@@ -4,14 +4,12 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
-import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
@@ -36,8 +34,6 @@ fun RegisterScreen(
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-
-    val categories by userProgressViewModel.categories.observeAsState(emptyList())
 
     val showErrorText by registerViewModel.showErrorText
     val errorMessage by registerViewModel.errorMessage
@@ -98,7 +94,6 @@ fun RegisterScreen(
                         registerViewModel = registerViewModel,
                         navController = navController,
                         themeViewModel = themeViewModel,
-                        categories = categories,
                         userProgressViewModel = userProgressViewModel
                     )
                 }

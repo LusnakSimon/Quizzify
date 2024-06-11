@@ -43,8 +43,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -66,9 +64,6 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.data.Category
 import com.uniza.quizzify.data.User
-import com.uniza.quizzify.data.UserProgress
-import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
-import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 
 
 @Composable
@@ -519,10 +514,8 @@ fun ScrollableCategoryColumn(
     items: List<Category>,
     onItemClick: (Category) -> Unit,
     onResetClick: (Category) -> Unit,
-    categoryViewModel : CategoryViewModel,
-    userProgressList : List<UserProgress>?,
-    userProgressViewModel: UserProgressViewModel,
-    user : User
+    answeredQuestionsInCategoryCount : Map<Int, Int>,
+    totalQuestionsInCategoryCount : Map<Int, Int>
     ) {
     LazyColumn(
         modifier = Modifier
@@ -532,14 +525,13 @@ fun ScrollableCategoryColumn(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(items) { item ->
-            val questionCount by categoryViewModel.getQuestionCountByCategory(item.categoryId).observeAsState()
-            val userProgress = userProgressList?.find { it.categoryId == item.categoryId }
-            val progressValue = userProgress?.progress ?: 0
+            val progress = answeredQuestionsInCategoryCount[item.categoryId] ?: 0
+            val questionsTotal = totalQuestionsInCategoryCount[item.categoryId] ?: 0
             CategoryCard(item = item,
                 onClick = { onItemClick(item) },
                 onResetClick = { onResetClick(item) },
-                progress = progressValue,
-                questionsTotal = questionCount ?: 0
+                progress = progress,
+                questionsTotal = questionsTotal
                 )
         }
 
@@ -631,11 +623,7 @@ fun ResetButton(onResetClick: () -> Unit) {
         )
     }
 }
-data class CardItem(/*TODO*/
-                    val title: String,
-                    val progress: Int,
-                    val imageResId: Int
-)
+
 
 @Composable
 fun CategoryProgress(questionNumber : Int, questionsTotal : Int) {

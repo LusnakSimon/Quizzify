@@ -7,13 +7,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.uniza.quizzify.data.User
-import com.uniza.quizzify.ui.utils.CustomTopBar
-import com.uniza.quizzify.ui.utils.Leaderboard
-import com.uniza.quizzify.ui.utils.ScrollableColumn
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.LeaderboardViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.Leaderboard
+import com.uniza.quizzify.ui.utils.ScrollableColumn
 import kotlinx.coroutines.launch
 
 @Composable
@@ -42,6 +41,7 @@ fun LeaderboardScreen(
         currentUser?.let { Leaderboard(users = topUsers, currentUser = it) {
             coroutineScope.launch {
                 if (it == currentUser!!.username) {
+                    userViewModel.setLastVisitedScreen("leaderboard")
                     navController.navigate("profile")
                 } else {
                     userViewModel.getOtherUser(it) {

@@ -1,19 +1,17 @@
 package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.uniza.quizzify.ui.utils.CustomTopBar
-import com.uniza.quizzify.ui.utils.ScrollableColumn
-import com.uniza.quizzify.ui.utils.SettingRow
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
+import com.uniza.quizzify.ui.utils.CustomTopBar
+import com.uniza.quizzify.ui.utils.ScrollableColumn
+import com.uniza.quizzify.ui.utils.SettingRow
 import kotlinx.coroutines.launch
 
 @Composable

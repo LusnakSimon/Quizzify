@@ -1,10 +1,6 @@
 package com.uniza.quizzify.ui.utils
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import com.uniza.quizzify.data.Category
-import com.uniza.quizzify.data.UserProgress
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
@@ -19,7 +15,6 @@ object RegistrationUtils {
         registerViewModel: RegisterViewModel,
         navController: NavController,
         themeViewModel: ThemeViewModel,
-        categories : List<Category>,
         userProgressViewModel: UserProgressViewModel
     ) {
         val errorMessage = when {

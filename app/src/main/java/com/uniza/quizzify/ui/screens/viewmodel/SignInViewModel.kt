@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class SignInViewModel() : ViewModel() {
+class SignInViewModel : ViewModel() {
 
     var errorMessage : MutableState<String> = mutableStateOf("")
         private set

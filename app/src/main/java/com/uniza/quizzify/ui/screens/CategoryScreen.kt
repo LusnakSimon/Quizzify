@@ -2,6 +2,7 @@ package com.uniza.quizzify.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
@@ -24,14 +25,21 @@ fun CategoryScreen(
     userViewModel: UserViewModel
     ) {
 
+
+
     val categories by categoryViewModel.categories.observeAsState(emptyList())
 
     val showDialog by categoryViewModel.showDialog
     val selectedCategory by categoryViewModel.selectedCategory
 
-    val userProgressList by userProgressViewModel.userProgressList.observeAsState(emptyList())
-
     val user by userViewModel.user
+
+    LaunchedEffect(categories, user?.userId) {
+        user?.let { userProgressViewModel.fetchAllProgressData(it.userId, categories) }
+    }
+
+    val answeredQuestionsInCategoryCount by userProgressViewModel.answeredQuestionsInCategoryCount.observeAsState(emptyMap())
+    val totalQuestionsInCategoryCount by userProgressViewModel.totalQuestionsInCategoryCount.observeAsState(emptyMap())
 
     BackHandler {
         navController.navigate("mainMenu")
@@ -44,7 +52,7 @@ fun CategoryScreen(
             onConfirm = {
                 selectedCategory?.let { category ->
                     user?.let { user ->
-                        userProgressViewModel.resetProgress(user.userId, category.categoryId)
+                        userProgressViewModel.resetUserProgressInCategory(user.userId, category.categoryId)
                     }
                 }
                 categoryViewModel.dismissDialog()
@@ -67,10 +75,8 @@ fun CategoryScreen(
                 items = categories,
                 onItemClick = { category -> navController.navigate("question/${category.categoryId}") },
                 onResetClick = { category -> categoryViewModel.showResetDialog(category) },
-                categoryViewModel = categoryViewModel,
-                userProgressList = userProgressList,
-                user = currentUser,
-                userProgressViewModel = userProgressViewModel
+                answeredQuestionsInCategoryCount = answeredQuestionsInCategoryCount,
+                totalQuestionsInCategoryCount = totalQuestionsInCategoryCount
             )
 
         }

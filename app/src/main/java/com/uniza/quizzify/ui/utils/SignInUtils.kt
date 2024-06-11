@@ -7,7 +7,7 @@ import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 
 object SignInUtils {
-    suspend fun performSignIn(
+    fun performSignIn(
         username: String,
         password: String,
         userViewModel: UserViewModel,

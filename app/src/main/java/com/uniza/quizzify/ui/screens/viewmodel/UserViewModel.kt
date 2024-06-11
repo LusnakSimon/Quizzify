@@ -1,11 +1,10 @@
 package com.uniza.quizzify.ui.screens.viewmodel
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.uniza.quizzify.data.User
 import com.uniza.quizzify.data.UserRepository
@@ -20,6 +19,13 @@ class UserViewModel(private val userRepository : UserRepository): ViewModel() {
 
     var otherUser: MutableState<User?> = mutableStateOf(null)
         private set
+
+    private val _lastVisitedScreen = MutableLiveData<String?>()
+    val lastVisitedScreen: LiveData<String?> = _lastVisitedScreen
+
+    fun setLastVisitedScreen(route: String?) {
+        _lastVisitedScreen.value = route
+    }
 
     fun authenticateUser(username: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {

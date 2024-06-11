@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.uniza.quizzify.data.AnswerRepository
 import com.uniza.quizzify.data.AppDatabase
 import com.uniza.quizzify.data.CategoryRepository
 import com.uniza.quizzify.data.QuestionRepository
@@ -47,12 +48,16 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
     val categoryRepository = CategoryRepository(database.categoryDao())
     val userProgressRepository = UserProgressRepository(database.userProgressDao())
     val questionRepository = QuestionRepository(database.questionDao())
+    val answerRepository = AnswerRepository(database.answerDao())
 
-    val userProgressViewModelFactory = ViewModelFactory { UserProgressViewModel(userProgressRepository, categoryRepository) }
+    val userProgressViewModelFactory = ViewModelFactory { UserProgressViewModel(userProgressRepository, questionRepository) }
     val userProgressViewModel: UserProgressViewModel = viewModel(factory = userProgressViewModelFactory)
 
     val userViewModelFactory = ViewModelFactory { UserViewModel(userRepository) }
     val userViewModel: UserViewModel = viewModel(factory = userViewModelFactory)
+
+    val categoryViewModelFactory = ViewModelFactory { CategoryViewModel(categoryRepository, questionRepository) }
+    val categoryViewModel : CategoryViewModel = viewModel(factory = categoryViewModelFactory)
 
     NavHost(navController = navController, startDestination = startDestination) {
 
@@ -101,17 +106,16 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
         }
 
         composable("categories") {
-            val categoryViewModelFactory = ViewModelFactory { CategoryViewModel(categoryRepository, questionRepository) }
-            val categoryViewModel : CategoryViewModel = viewModel(factory = categoryViewModelFactory)
+
             CategoryScreen(navController, categoryViewModel, userProgressViewModel, userViewModel)
         }
 
         composable("question/{categoryId}") { backStackEntry ->
-            val questionViewModelFactory = ViewModelFactory { QuestionViewModel(questionRepository) }
+            val questionViewModelFactory = ViewModelFactory { QuestionViewModel(questionRepository, answerRepository) }
             val questionViewModel : QuestionViewModel = viewModel(factory = questionViewModelFactory)
             val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull()
             if (categoryId != null) {
-                QuestionScreen(navController, categoryId, questionViewModel, userProgressViewModel, userViewModel)
+                QuestionScreen(navController, categoryId, userProgressViewModel, userViewModel, categoryViewModel)
             }
         }
 
