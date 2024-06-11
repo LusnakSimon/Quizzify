@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.uniza.quizzify.data.AppDatabase
 import com.uniza.quizzify.data.CategoryRepository
+import com.uniza.quizzify.data.QuestionRepository
+import com.uniza.quizzify.data.UserProgressRepository
 import com.uniza.quizzify.data.UserRepository
 import com.uniza.quizzify.ui.screens.CategoryScreen
 import com.uniza.quizzify.ui.screens.ChangePasswordScreen
@@ -30,6 +32,7 @@ import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.ViewModelFactory
 
@@ -42,6 +45,11 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
 
     val userRepository = UserRepository(database.userDao())
     val categoryRepository = CategoryRepository(database.categoryDao())
+    val userProgressRepository = UserProgressRepository(database.userProgressDao())
+    val questionRepository = QuestionRepository(database.questionDao())
+
+    val userProgressViewModelFactory = ViewModelFactory { UserProgressViewModel(userProgressRepository, categoryRepository) }
+    val userProgressViewModel: UserProgressViewModel = viewModel(factory = userProgressViewModelFactory)
 
     val userViewModelFactory = ViewModelFactory { UserViewModel(userRepository) }
     val userViewModel: UserViewModel = viewModel(factory = userViewModelFactory)
@@ -53,13 +61,13 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
         composable("signIn") {
             val signInViewModelFactory = ViewModelFactory { SignInViewModel() }
             val signInViewModel: SignInViewModel = viewModel(factory = signInViewModelFactory)
-            SignInScreen(navController, signInViewModel, userViewModel, themeViewModel)
+            SignInScreen(navController, signInViewModel, userViewModel, themeViewModel, userProgressViewModel)
         }
 
         composable("register") {
             val registerViewModelFactory = ViewModelFactory { RegisterViewModel() }
             val registerViewModel : RegisterViewModel = viewModel(factory = registerViewModelFactory)
-            RegisterScreen(navController, registerViewModel, userViewModel, themeViewModel)
+            RegisterScreen(navController, registerViewModel, userViewModel, themeViewModel, userProgressViewModel)
         }
 
         composable("mainMenu") {
@@ -93,15 +101,18 @@ fun NavigationGraph(themeViewModel: ThemeViewModel, startDestination: String = "
         }
 
         composable("categories") {
-            val categoryViewModelFactory = ViewModelFactory { CategoryViewModel() }
+            val categoryViewModelFactory = ViewModelFactory { CategoryViewModel(categoryRepository, questionRepository) }
             val categoryViewModel : CategoryViewModel = viewModel(factory = categoryViewModelFactory)
-            CategoryScreen(navController, categoryViewModel)
+            CategoryScreen(navController, categoryViewModel, userProgressViewModel, userViewModel)
         }
 
-        composable("question"/*TODO*/) {
-            val questionViewModelFactory = ViewModelFactory { QuestionViewModel() }
+        composable("question/{categoryId}") { backStackEntry ->
+            val questionViewModelFactory = ViewModelFactory { QuestionViewModel(questionRepository) }
             val questionViewModel : QuestionViewModel = viewModel(factory = questionViewModelFactory)
-            QuestionScreen(navController, questionViewModel)
+            val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull()
+            if (categoryId != null) {
+                QuestionScreen(navController, categoryId, questionViewModel, userProgressViewModel, userViewModel)
+            }
         }
 
         composable("details") {

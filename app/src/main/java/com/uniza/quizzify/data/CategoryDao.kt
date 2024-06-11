@@ -14,4 +14,7 @@ interface CategoryDao {
     @Query("SELECT * FROM categories")
     fun getAllCategories(): LiveData<List<Category>>
 
+    @Query("SELECT * FROM categories")
+    suspend fun getAllCategoriesSync(): List<Category>
+
 }

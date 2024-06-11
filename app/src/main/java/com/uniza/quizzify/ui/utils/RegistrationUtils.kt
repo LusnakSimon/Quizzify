@@ -1,9 +1,13 @@
 package com.uniza.quizzify.ui.utils
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
+import com.uniza.quizzify.data.Category
+import com.uniza.quizzify.data.UserProgress
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 
 object RegistrationUtils {
@@ -14,7 +18,9 @@ object RegistrationUtils {
         userViewModel: UserViewModel,
         registerViewModel: RegisterViewModel,
         navController: NavController,
-        themeViewModel: ThemeViewModel
+        themeViewModel: ThemeViewModel,
+        categories : List<Category>,
+        userProgressViewModel: UserProgressViewModel
     ) {
         val errorMessage = when {
             username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() -> "Please fill out all fields."
@@ -27,6 +33,8 @@ object RegistrationUtils {
                     if (registerSuccess) {
                         userViewModel.authenticateUser(username = username, password = password) { authSuccess ->
                             if (authSuccess) {
+                                /*TODO here*/
+                                userViewModel.user.value?.let { userProgressViewModel.initializeUserProgress(userId = it.userId) }
                                 navController.navigate("mainMenu")
                             } else {
                                 registerViewModel.setShowErrorText(true)

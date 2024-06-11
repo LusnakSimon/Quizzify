@@ -4,14 +4,17 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
+import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.RegisterViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -28,10 +31,13 @@ fun RegisterScreen(
     navController: NavController,
     registerViewModel: RegisterViewModel,
     userViewModel: UserViewModel,
-    themeViewModel: ThemeViewModel
+    themeViewModel: ThemeViewModel,
+    userProgressViewModel: UserProgressViewModel
 ) {
 
     val coroutineScope = rememberCoroutineScope()
+
+    val categories by userProgressViewModel.categories.observeAsState(emptyList())
 
     val showErrorText by registerViewModel.showErrorText
     val errorMessage by registerViewModel.errorMessage
@@ -91,7 +97,9 @@ fun RegisterScreen(
                         userViewModel = userViewModel,
                         registerViewModel = registerViewModel,
                         navController = navController,
-                        themeViewModel = themeViewModel
+                        themeViewModel = themeViewModel,
+                        categories = categories,
+                        userProgressViewModel = userProgressViewModel
                     )
                 }
             }

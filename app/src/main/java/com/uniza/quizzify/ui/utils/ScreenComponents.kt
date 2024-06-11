@@ -43,6 +43,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,7 +64,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uniza.quizzify.R
+import com.uniza.quizzify.data.Category
 import com.uniza.quizzify.data.User
+import com.uniza.quizzify.data.UserProgress
+import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 
 
 @Composable
@@ -509,7 +515,15 @@ fun Leaderboard(users : List<User>,
 }
 
 @Composable
-fun ScrollableCategoryColumn(items: List<CardItem>, onItemClick: (CardItem) -> Unit, onResetClick: () -> Unit) {
+fun ScrollableCategoryColumn(
+    items: List<Category>,
+    onItemClick: (Category) -> Unit,
+    onResetClick: (Category) -> Unit,
+    categoryViewModel : CategoryViewModel,
+    userProgressList : List<UserProgress>?,
+    userProgressViewModel: UserProgressViewModel,
+    user : User
+    ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -518,17 +532,31 @@ fun ScrollableCategoryColumn(items: List<CardItem>, onItemClick: (CardItem) -> U
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(items) { item ->
-            CategoryCard(item = item, onClick = { onItemClick(item) }, onResetClick)
+            val questionCount by categoryViewModel.getQuestionCountByCategory(item.categoryId).observeAsState()
+            val userProgress = userProgressList?.find { it.categoryId == item.categoryId }
+            val progressValue = userProgress?.progress ?: 0
+            CategoryCard(item = item,
+                onClick = { onItemClick(item) },
+                onResetClick = { onResetClick(item) },
+                progress = progressValue,
+                questionsTotal = questionCount ?: 0
+                )
         }
 
     }
 }
 
 @Composable
-fun CategoryCard(item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) {
+fun CategoryCard(
+    item: Category,
+    onClick: () -> Unit,
+    onResetClick: () -> Unit,
+    progress: Int,
+    questionsTotal : Int
+    ) {
     Card(
         modifier = Modifier
-            .border(1.dp, Color.DarkGray/*TODO*/, RoundedCornerShape(8.dp))
+            .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.primaryContainer)
@@ -548,16 +576,21 @@ fun CategoryCard(item: CardItem, onClick: () -> Unit, onResetClick: () -> Unit) 
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            CategoryInfoRow(item = item, onResetClick = onResetClick)
+            CategoryInfoRow(
+                item = item,
+                onResetClick = onResetClick,
+                progress = progress,
+                questionsTotal = questionsTotal
+            )
 
         }
     }
 }
 
 @Composable
-fun CategoryImage(item: CardItem) {
+fun CategoryImage(item: Category) {
     Image(
-        painter = painterResource(id = item.imageResId),
+        painter = painterResource(id = /*item.imageId TODO*/R.drawable.default_profile_picture),
         contentDescription = null,
         modifier = Modifier
             .fillMaxWidth()
@@ -566,18 +599,18 @@ fun CategoryImage(item: CardItem) {
     )
 }
 @Composable
-fun CategoryInfoRow(item: CardItem, onResetClick: () -> Unit) {
+fun CategoryInfoRow(item: Category, onResetClick: () -> Unit, progress: Int, questionsTotal: Int) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Text(text = item.title, fontSize = 35.sp, color = Color.Black)
+        Text(text = item.categoryName, fontSize = 35.sp, color = Color.Black)
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(text = "${item.progress}/${10/*TODO*/}", fontSize = 20.sp, color = Color.Black)
+        Text(text = "${progress}/${questionsTotal}", fontSize = 20.sp, color = Color.Black)
 
         Spacer(modifier = Modifier.width(8.dp))
 

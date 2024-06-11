@@ -13,9 +13,11 @@ interface UserProgressDao {
     @Query("SELECT * FROM user_progress WHERE userId = :userId AND categoryId = :categoryId LIMIT 1")
     suspend fun getUserProgress(userId: Int, categoryId: Int): UserProgress?
 
-    @Query("UPDATE user_progress SET progress = :progress WHERE userId = :userId AND categoryId = :categoryId")
-    suspend fun updateUserProgress(userId: Int, categoryId: Int, progress: Float)
+    @Query("UPDATE user_progress SET progress = progress + 1 WHERE userId = :userId AND categoryId = :categoryId")
+    suspend fun incrementUserProgress(userId: Int, categoryId: Int)
 
-    @Query("DELETE FROM user_progress WHERE userId = :userId AND categoryId = :categoryId")
-    suspend fun clearUserProgress(userId: Int, categoryId: Int)
+    @Query("UPDATE user_progress SET progress = 0 WHERE userId = :userId AND categoryId = :categoryId")
+    suspend fun resetUserProgress(userId: Int, categoryId: Int)
+    @Query("SELECT * FROM user_progress WHERE userId = :userId")
+    suspend fun getUserProgressById(userId: Int): List<UserProgress>?
 }

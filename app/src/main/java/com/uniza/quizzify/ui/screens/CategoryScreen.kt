@@ -3,43 +3,51 @@ package com.uniza.quizzify.ui.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.uniza.quizzify.ui.utils.CardItem
+import com.uniza.quizzify.R
+import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.CustomTopBar
 import com.uniza.quizzify.ui.utils.ResetDialog
 import com.uniza.quizzify.ui.utils.ScrollableCategoryColumn
 import com.uniza.quizzify.ui.utils.ScrollableColumn
-import com.uniza.quizzify.R
-import com.uniza.quizzify.ui.screens.viewmodel.CategoryViewModel
 
 @Composable
-fun CategoryScreen(navController: NavController, categoryViewModel: CategoryViewModel) {
+fun CategoryScreen(
+    navController: NavController,
+    categoryViewModel: CategoryViewModel,
+    userProgressViewModel: UserProgressViewModel,
+    userViewModel: UserViewModel
+    ) {
+
+    val categories by categoryViewModel.categories.observeAsState(emptyList())
+
+    val showDialog by categoryViewModel.showDialog
+    val selectedCategory by categoryViewModel.selectedCategory
+
+    val userProgressList by userProgressViewModel.userProgressList.observeAsState(emptyList())
+
+    val user by userViewModel.user
 
     BackHandler {
         navController.navigate("mainMenu")
     }
 
-    val categories = List(10/*TODO*/) {/*TODO */
-        CardItem(
-            title = "Category $it",
-            progress = 0,
-            imageResId = android.R.drawable.ic_menu_camera
-        )
-    }
-
-    var showDialog by remember { mutableStateOf(false) }
 
     if (showDialog) {
         ResetDialog(
-            onDismiss = { showDialog = false },
+            onDismiss = { categoryViewModel.dismissDialog() },
             onConfirm = {
-                showDialog = false
-                /*TODO reset progress*/
+                selectedCategory?.let { category ->
+                    user?.let { user ->
+                        userProgressViewModel.resetProgress(user.userId, category.categoryId)
+                    }
+                }
+                categoryViewModel.dismissDialog()
             }
         )
     }
@@ -53,11 +61,19 @@ fun CategoryScreen(navController: NavController, categoryViewModel: CategoryView
             title = stringResource(id = R.string.Categories)
         )
 
-        ScrollableCategoryColumn(
-            items = categories,
-            onItemClick = {/*TODO*/navController.navigate("question") },
-            onResetClick = {showDialog = true}
-        )
+        user?.let {currentUser ->
+            userProgressViewModel.fetchUserProgress(currentUser.userId)
+            ScrollableCategoryColumn(
+                items = categories,
+                onItemClick = { category -> navController.navigate("question/${category.categoryId}") },
+                onResetClick = { category -> categoryViewModel.showResetDialog(category) },
+                categoryViewModel = categoryViewModel,
+                userProgressList = userProgressList,
+                user = currentUser,
+                userProgressViewModel = userProgressViewModel
+            )
+
+        }
     }
 }
 

@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.uniza.quizzify.R
 import com.uniza.quizzify.ui.screens.viewmodel.SignInViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.ThemeViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
 import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AppLogo
 import com.uniza.quizzify.ui.utils.BlueButton
@@ -27,7 +28,8 @@ fun SignInScreen(
     navController: NavController,
     signInViewModel: SignInViewModel,
     userViewModel: UserViewModel,
-    themeViewModel: ThemeViewModel
+    themeViewModel: ThemeViewModel,
+    userProgressViewModel: UserProgressViewModel
     ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -79,7 +81,8 @@ fun SignInScreen(
                         userViewModel = userViewModel,
                         signInViewModel = signInViewModel,
                         navController = navController,
-                        themeViewModel = themeViewModel
+                        themeViewModel = themeViewModel,
+                        userProgressViewModel = userProgressViewModel
                     )
                 }
             }

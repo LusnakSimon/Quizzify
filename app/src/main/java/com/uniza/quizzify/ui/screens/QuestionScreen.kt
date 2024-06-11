@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.uniza.quizzify.ui.screens.viewmodel.QuestionViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserProgressViewModel
+import com.uniza.quizzify.ui.screens.viewmodel.UserViewModel
 import com.uniza.quizzify.ui.utils.AnswerButtons
 import com.uniza.quizzify.ui.utils.CategoryProgress
 import com.uniza.quizzify.ui.utils.CustomTopBar
@@ -13,7 +15,13 @@ import com.uniza.quizzify.ui.utils.QuestionText
 import com.uniza.quizzify.ui.utils.ScrollableColumn
 
 @Composable
-fun QuestionScreen(navController: NavController, questionViewModel: QuestionViewModel) {
+fun QuestionScreen(
+    navController: NavController,
+    categoryId : Int,
+    questionViewModel: QuestionViewModel,
+    userProgressViewModel: UserProgressViewModel,
+    userViewModel: UserViewModel
+) {
 
 
     BackHandler {
@@ -22,7 +30,7 @@ fun QuestionScreen(navController: NavController, questionViewModel: QuestionView
 
     ScrollableColumn {
 
-        CustomTopBar(navController = navController, navigateTo = "categories", title = /*TODO*/"[Category name]")
+        CustomTopBar(navController = navController, navigateTo = "categories", title = /*TODO*/"$categoryId")
 
         CategoryProgress(questionNumber = 1/*TODO*/, questionsTotal = 10/*TODO*/)
 
